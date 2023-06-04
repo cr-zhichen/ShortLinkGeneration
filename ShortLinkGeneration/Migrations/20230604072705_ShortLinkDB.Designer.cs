@@ -11,8 +11,8 @@ using ShortLinkGeneration.DB;
 namespace ShortLinkGeneration.Migrations
 {
     [DbContext(typeof(ShortLinkContext))]
-    [Migration("20230603142028_Initial")]
-    partial class Initial
+    [Migration("20230604072705_ShortLinkDB")]
+    partial class ShortLinkDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,9 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime");
 
+                    b.Property<bool>("IsDelayed")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int?>("MaxClicks")
                         .HasColumnType("int");
 
@@ -86,6 +89,9 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()

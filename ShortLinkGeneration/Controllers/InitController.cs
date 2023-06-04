@@ -11,7 +11,8 @@ namespace ShortLinkGeneration.Controllers;
 /// 初始化控制器
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+// [Route("[controller]")]
+[Route("init")]
 public class InitController : ControllerBase
 {
     readonly IInitService _initService;
@@ -25,7 +26,7 @@ public class InitController : ControllerBase
     /// 初始化数据库连接
     /// </summary>
     /// <returns></returns>
-    [HttpGet("InitDb")]
+    [HttpPost("db")]
     public IRe<InitResponse.InitDb> InitDb()
     {
         return _initService.InitDb();

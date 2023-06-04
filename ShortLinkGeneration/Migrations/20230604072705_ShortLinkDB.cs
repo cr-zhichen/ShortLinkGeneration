@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShortLinkGeneration.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ShortLinkDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,7 +29,8 @@ namespace ShortLinkGeneration.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordResetToken = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime", nullable: true)
+                    PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +52,8 @@ namespace ShortLinkGeneration.Migrations
                     CreationDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     ClickCount = table.Column<int>(type: "int", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    MaxClicks = table.Column<int>(type: "int", nullable: true)
+                    MaxClicks = table.Column<int>(type: "int", nullable: true),
+                    IsDelayed = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {

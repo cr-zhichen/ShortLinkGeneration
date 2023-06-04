@@ -10,6 +10,7 @@ public class User
     public string Role { get; set; }
     public string PasswordResetToken { get; set; }
     public DateTime? PasswordResetTokenExpiry { get; set; }
+    public DateTime CreationTime { get; set; }
 
     // 导航属性
     public List<Link> Links { get; set; }
@@ -25,6 +26,7 @@ public class Link
     public int ClickCount { get; set; }
     public DateTime? ExpiryDate { get; set; }
     public int? MaxClicks { get; set; }
+    public bool IsDelayed { get; set; }
 
     // 导航属性
     public User User { get; set; }

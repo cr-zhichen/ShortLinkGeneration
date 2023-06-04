@@ -57,6 +57,9 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime");
 
+                    b.Property<bool>("IsDelayed")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int?>("MaxClicks")
                         .HasColumnType("int");
 
@@ -83,6 +86,9 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
