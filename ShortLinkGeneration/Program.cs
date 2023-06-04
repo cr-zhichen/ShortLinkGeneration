@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ShortLinkGeneration.Service;
+using ShortLinkGeneration.Static;
 using ShortLinkGeneration.Tool;
 using ShortLinkGeneration.Tool.JWT;
 
@@ -36,6 +37,13 @@ builder.Services.AddScoped<IInitService, InitImpl>();
 builder.Services.AddScoped<IUsersService, UsersImpl>();
 
 builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP"));
+
+//开启定时任务
+ScheduledTask.Add("clearVerificationCode",
+    () =>
+    {
+        VerificationCode.VerificationCodeList.RemoveAll(item => item.ExpireTime < DateTime.Now);
+    }, 60);
 
 #region 配置JWT
 
