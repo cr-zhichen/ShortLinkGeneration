@@ -12,7 +12,6 @@ namespace ShortLinkGeneration.Controllers;
 /// 初始化控制器
 /// </summary>
 [ApiController]
-// [Route("[controller]")]
 [Route("/api/init")]
 public class InitController : ControllerBase
 {

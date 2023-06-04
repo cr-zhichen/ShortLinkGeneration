@@ -26,6 +26,7 @@ builder.Services.AddDbContext<ShortLinkContext>(options =>
 
 //注入服务
 builder.Services.AddScoped<IInitService, InitImpl>();
+builder.Services.AddScoped<IUsersService, UsersImpl>();
 
 var app = builder.Build();
 
