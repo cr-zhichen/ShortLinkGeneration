@@ -2,8 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using ShortLinkGeneration.Controllers;
 using ShortLinkGeneration.DB;
 using ShortLinkGeneration.Entity;
+using ShortLinkGeneration.Entity.Enum;
+using ShortLinkGeneration.Entity.Request;
 using ShortLinkGeneration.Entity.Response;
 using ShortLinkGeneration.Service.Service;
+using ShortLinkGeneration.Tool;
 
 namespace ShortLinkGeneration.Service.Impl;
 
@@ -18,7 +21,7 @@ public class InitImpl : IInitService
         _db = db;
     }
 
-    public IRe<InitResponse.InitDb> InitDb()
+    public IRe<InitResponse.InitDbResponse> InitDb()
     {
         //判断数据库连接是否成功
         if (_db.Database.CanConnect())
@@ -29,14 +32,14 @@ public class InitImpl : IInitService
                 //如果存在则执行迁移
                 _db.Database.Migrate();
                 _logger.LogInformation("数据库初始化成功");
-                return new Ok<InitResponse.InitDb>
+                return new Ok<InitResponse.InitDbResponse>
                 {
                     Message = "数据库初始化成功"
                 };
             }
 
             _logger.LogInformation("数据库连接成功");
-            return new Ok<InitResponse.InitDb>
+            return new Ok<InitResponse.InitDbResponse>
             {
                 Message = "数据库连接成功"
             };
@@ -44,11 +47,51 @@ public class InitImpl : IInitService
         else
         {
             _logger.LogError("数据库连接失败");
-            return new Error<InitResponse.InitDb>
+            return new Error<InitResponse.InitDbResponse>
             {
                 Code = Code.ConnectionFailedDb,
                 Message = "数据库连接失败"
             };
         }
+    }
+
+    public IRe<InitResponse.InitAdminResponse> InitAdmin(
+        InitRequest.InitAdminRequest data)
+    {
+        //判断是否存在管理员账户
+        if (_db.Users.Any())
+        {
+            _logger.LogInformation("管理员账户已存在");
+            return new Error<InitResponse.InitAdminResponse>
+            {
+                Code = Code.AdminAccountAlreadyExists,
+                Message = "管理员账户已存在"
+            };
+        }
+
+        if (!data.Username.IsEmail() || !data.Password.IsPassword())
+        {
+            return new Error<InitResponse.InitAdminResponse>
+            {
+                Code = Code.UsernameOrPasswordFormatError,
+                Message = "账号或密码格式错误"
+            };
+        }
+
+        //创建管理员账户
+        var user = new User
+        {
+            Username = data.Username,
+            PasswordHash = data.Password.HashPassword(data.Username),
+            Role = Role.Admin,
+            CreationTime = DateTime.Now,
+        };
+        _db.Users.Add(user);
+        _db.SaveChanges();
+        _logger.LogInformation("管理员账户创建成功");
+        return new Ok<InitResponse.InitAdminResponse>
+        {
+            Message = "管理员账户创建成功"
+        };
     }
 }

@@ -1,3 +1,5 @@
+using ShortLinkGeneration.Entity.Enum;
+
 namespace ShortLinkGeneration.Entity;
 
 public interface IRe<T>
