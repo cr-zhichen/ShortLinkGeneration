@@ -31,4 +31,28 @@ public class UsersController
     {
         return _usersService.Register(data);
     }
+
+    /// <summary>
+    /// 用户登录
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [HttpPost("login")]
+    public IRe<UsersResponse.LoginResponse> Login(
+        UsersRequest.LoginRequest data)
+    {
+        return _usersService.Login(data);
+    }
+
+    /// <summary>
+    /// 发送验证码
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [HttpPost("sendCode")]
+    public IRe<UsersResponse.SendCodeResponse> SendCode(
+        UsersRequest.SendCodeRequest data)
+    {
+        return _usersService.SendCode(data);
+    }
 }

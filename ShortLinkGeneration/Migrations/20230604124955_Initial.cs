@@ -27,9 +27,6 @@ namespace ShortLinkGeneration.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Role = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordResetToken = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>

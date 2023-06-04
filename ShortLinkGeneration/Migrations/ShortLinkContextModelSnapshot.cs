@@ -94,12 +94,6 @@ namespace ShortLinkGeneration.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("PasswordResetTokenExpiry")
-                        .HasColumnType("datetime");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("longtext");

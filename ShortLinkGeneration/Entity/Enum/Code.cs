@@ -26,4 +26,34 @@ public enum Code
     /// 用户名或密码格式错误
     /// </summary>
     UsernameOrPasswordFormatError = 3,
+
+    /// <summary>
+    /// 密码错误
+    /// </summary>
+    PasswordError = 4,
+
+    /// <summary>
+    /// 账号不存在
+    /// </summary>
+    UsernameNotExist = 5,
+
+    /// <summary>
+    /// 验证码发送错误
+    /// </summary>
+    SendCodeError = 6,
+
+    /// <summary>
+    /// 邮箱格式错误
+    /// </summary>
+    EmailFormatError = 7,
+
+    /// <summary>
+    /// 用户名已存在
+    /// </summary>
+    UsernameExist = 8,
+
+    /// <summary>
+    /// 验证码错误
+    /// </summary>
+    CodeError = 9
 }

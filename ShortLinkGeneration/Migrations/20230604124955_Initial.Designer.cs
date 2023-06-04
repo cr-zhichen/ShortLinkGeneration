@@ -11,7 +11,7 @@ using ShortLinkGeneration.DB;
 namespace ShortLinkGeneration.Migrations
 {
     [DbContext(typeof(ShortLinkContext))]
-    [Migration("20230604085626_Initial")]
+    [Migration("20230604124955_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -96,12 +96,6 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("PasswordResetTokenExpiry")
-                        .HasColumnType("datetime");
 
                     b.Property<string>("Role")
                         .IsRequired()
