@@ -17,7 +17,14 @@ public class InitRequest
     /// </summary>
     public class InitAdminRequest
     {
-        public string Username { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
     }
 }
