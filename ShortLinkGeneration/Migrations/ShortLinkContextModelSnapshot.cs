@@ -95,7 +95,6 @@ namespace ShortLinkGeneration.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("PasswordResetToken")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("PasswordResetTokenExpiry")
