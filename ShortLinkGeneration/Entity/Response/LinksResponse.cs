@@ -15,4 +15,15 @@ public class LinksResponse
         /// </summary>
         public string ShortLink { get; set; }
     }
+    
+    /// <summary>
+    /// 检查链接响应实体
+    /// </summary>
+    public class DetectionResponse
+    {
+        /// <summary>
+        /// 链接是否可用
+        /// </summary>
+        public bool IsAvailable { get; set; }
+    }
 }

@@ -32,4 +32,15 @@ public class linksController
     {
         return await _linksService.Create(data);
     }
+
+    /// <summary>
+    /// 检测短链接是否可用
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("detection")]
+    public async Task<IRe<LinksResponse.DetectionResponse>> Detection(
+        LinksRequest.DetectionRequest data)
+    {
+        return await _linksService.Detection(data);
+    }
 }

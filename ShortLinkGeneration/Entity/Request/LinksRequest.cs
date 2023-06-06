@@ -30,4 +30,15 @@ public class LinksRequest
         /// </summary>
         public int? MaxClicks { get; set; }
     }
+    
+    /// <summary>
+    /// 检查链接请求实体
+    /// </summary>
+    public class DetectionRequest
+    {
+        /// <summary>
+        /// 目标短链接
+        /// </summary>
+        public string ShortLink { get; set; }
+    }
 }

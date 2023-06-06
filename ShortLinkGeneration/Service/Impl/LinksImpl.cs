@@ -34,7 +34,7 @@ public class LinksImpl : ILinksService
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
 
-        if (data.ShortLink is not null && data.ShortLink.Length != 0 && JudgeShortConnection(data.ShortLink))
+        if (data.ShortLink is not null && data.ShortLink.Length != 0 && !JudgeShortConnection(data.ShortLink))
         {
             return new Ok<LinksResponse.CreateResponse>
             {
@@ -43,10 +43,24 @@ public class LinksImpl : ILinksService
             };
         }
 
+        string shortLink;
         //Token不存在，直接生成短链接
         if (token == "")
         {
-            var shortLink = CreateShortLink(data.ShortLink, data.LongLink, data.ExpiryDate, data.MaxClicks);
+            try
+            {
+                shortLink = CreateShortLink(data.ShortLink, data.LongLink, data.ExpiryDate, data.MaxClicks);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "生成短链接失败");
+                return new Error<LinksResponse.CreateResponse>
+                {
+                    Code = Code.ShortLinkGenerationFailed,
+                    Message = "短链接生成失败"
+                };
+            }
+
             //将短链接存入数据库
             _db.Links.Add(new Link()
             {
@@ -102,8 +116,21 @@ public class LinksImpl : ILinksService
                 };
             }
 
+            try
+            {
+                shortLink = CreateShortLink(data.ShortLink, data.LongLink, data.ExpiryDate, data.MaxClicks);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "生成短链接失败");
+                return new Error<LinksResponse.CreateResponse>
+                {
+                    Code = Code.ShortLinkGenerationFailed,
+                    Message = "短链接生成失败"
+                };
+            }
+
             //生成短链接
-            var shortLink = CreateShortLink(data.ShortLink, data.LongLink, data.ExpiryDate, data.MaxClicks);
             //将短链接存入数据库
             _db.Links.Add(new Link()
             {
@@ -132,6 +159,29 @@ public class LinksImpl : ILinksService
         }
     }
 
+    public async Task<IRe<LinksResponse.DetectionResponse>> Detection(LinksRequest.DetectionRequest data)
+    {
+        //是否满足条件
+        var isAvailable = JudgeShortConnection(data.ShortLink);
+
+        if (isAvailable)
+        {
+            return new Ok<LinksResponse.DetectionResponse>
+            {
+                Code = Code.Success,
+                Message = "短链接可用"
+            };
+        }
+        else
+        {
+            return new Error<LinksResponse.DetectionResponse>
+            {
+                Code = Code.ShortLinkExists,
+                Message = "短链接不可用"
+            };
+        }
+    }
+
     /// <summary>
     /// 游客生成短连接
     /// </summary>
@@ -142,22 +192,25 @@ public class LinksImpl : ILinksService
     private string CreateShortLink(string? shortLink, string longLink, DateTime? expiryDate, int? maxClicks)
     {
         string tempShortLink = shortLink ?? "";
-        //生成短链接
-        if (shortLink is null || shortLink.Length == 0)
-        {
-            tempShortLink = RandomlyGenerateShortLinks();
-        }
+        int retryCount = 0;
+        const int maxRetries = 1000; // 设置最大重试次数
 
-        //判断短链接是否存在
-        if (JudgeShortConnection(tempShortLink))
+        //生成短链接
+        while (shortLink is null || shortLink.Length == 0 || !JudgeShortConnection(tempShortLink))
         {
-            CreateShortLink(shortLink, longLink, expiryDate, maxClicks);
+            if (++retryCount > maxRetries)
+            {
+                throw new Exception("无法生成短链接");
+            }
+
+            tempShortLink = RandomlyGenerateShortLinks();
         }
 
         shortLink = tempShortLink;
 
         return shortLink;
     }
+
 
     /// <summary>
     /// 随机生成短连接
@@ -185,29 +238,26 @@ public class LinksImpl : ILinksService
 
 
     /// <summary>
-    /// 判断短连接是否存在
+    /// 判断短连接是否可用
     /// </summary>
     /// <param name="shortLink"></param>
     /// <returns></returns>
     private bool JudgeShortConnection(string shortLink)
     {
-        if (!DetermineTheShortConnectionFormat(shortLink))
-        {
-            return false;
-        }
-
-        return _db.Links.Any(x => x.ShortLink == shortLink);
+        return DetermineTheShortConnectionFormat(shortLink) && !_db.Links.Any(x => x.ShortLink == shortLink);
     }
 
     /// <summary>
-    /// 判断短连接格式
+    /// 判断短连接格式是否正确
     /// </summary>
     /// <param name="shortLink"></param>
     /// <returns></returns>
     private bool DetermineTheShortConnectionFormat(string shortLink)
     {
         if (string.IsNullOrEmpty(shortLink))
+        {
             return false;
+        }
 
         // 使用正则表达式判断格式是否正确
         string pattern = @"^[a-z0-9_-]+$";

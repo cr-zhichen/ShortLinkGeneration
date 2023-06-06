@@ -56,19 +56,24 @@ public enum Code
     /// 验证码错误
     /// </summary>
     CodeError = 9,
-    
+
     /// <summary>
     /// Token错误
     /// </summary>
     TokenError = 10,
-    
+
     /// <summary>
     /// 密码格式错误
     /// </summary>
     PasswordFormatError = 11,
-    
+
     /// <summary>
     /// 短连接重复
     /// </summary>
     ShortLinkExists = 12,
+
+    /// <summary>
+    /// 短连接生成失败
+    /// </summary>
+    ShortLinkGenerationFailed = 13,
 }

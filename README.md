@@ -80,7 +80,7 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 #### 链接管理
 
 - ✅ POST `api/links/create`：生成新的短链接
-- POST `api/links/detection`：检测短连接是否可用
+- ✅ POST `api/links/detection`：检测短连接是否可用
 - POST `api/links/get-all`：获取当前用户创建的所有短链接
 - POST `api/links/get`：获取指定的短链接的信息
 - POST `api/links/update`：更新指定的短链接
