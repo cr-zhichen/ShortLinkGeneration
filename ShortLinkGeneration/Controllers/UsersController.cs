@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ShortLinkGeneration.Attribute;
 using ShortLinkGeneration.Entity;
 using ShortLinkGeneration.Entity.Request;
 using ShortLinkGeneration.Entity.Response;
@@ -61,6 +62,7 @@ public class UsersController
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
+    [ValidateJwtToken]
     [HttpPost("info")]
     public IRe<UsersResponse.InfoResponse> Info(
         UsersRequest.InfoRequest data)

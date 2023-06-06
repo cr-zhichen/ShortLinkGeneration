@@ -55,5 +55,10 @@ public enum Code
     /// <summary>
     /// 验证码错误
     /// </summary>
-    CodeError = 9
+    CodeError = 9,
+    
+    /// <summary>
+    /// Token错误
+    /// </summary>
+    TokenError = 10
 }
