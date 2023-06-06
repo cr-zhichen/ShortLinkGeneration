@@ -6,5 +6,5 @@ namespace ShortLinkGeneration.Service.Service;
 
 public interface ILinksService
 {
-    public IRe<LinksResponse.CreateResponse> Create(LinksRequest.CreateRequest data);
+    public Task<IRe<LinksResponse.CreateResponse>> Create(LinksRequest.CreateRequest data);
 }

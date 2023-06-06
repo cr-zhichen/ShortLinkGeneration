@@ -21,16 +21,16 @@ public class InitImpl : IInitService
         _db = db;
     }
 
-    public IRe<InitResponse.InitDbResponse> InitDb()
+    public async Task<IRe<InitResponse.InitDbResponse>> InitDb()
     {
         //判断数据库连接是否成功
-        if (_db.Database.CanConnect())
+        if (await _db.Database.CanConnectAsync())
         {
             //判断是否存在未执行的迁移
-            if (_db.Database.GetPendingMigrations().Any())
+            if ((await _db.Database.GetPendingMigrationsAsync()).Any())
             {
                 //如果存在则执行迁移
-                _db.Database.Migrate();
+                await _db.Database.MigrateAsync();
                 _logger.LogInformation("数据库初始化成功");
                 return new Ok<InitResponse.InitDbResponse>
                 {
@@ -55,7 +55,7 @@ public class InitImpl : IInitService
         }
     }
 
-    public IRe<InitResponse.InitAdminResponse> InitAdmin(
+    public async Task<IRe<InitResponse.InitAdminResponse>> InitAdmin(
         InitRequest.InitAdminRequest data)
     {
         //判断是否存在管理员账户
@@ -87,7 +87,7 @@ public class InitImpl : IInitService
             CreationTime = DateTime.Now,
         };
         _db.Users.Add(user);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
         _logger.LogInformation("管理员账户创建成功");
         return new Ok<InitResponse.InitAdminResponse>
         {

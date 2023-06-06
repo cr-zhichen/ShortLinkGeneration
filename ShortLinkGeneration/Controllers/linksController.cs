@@ -27,9 +27,9 @@ public class linksController
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("create")]
-    public IRe<LinksResponse.CreateResponse> Create(
+    public async Task<IRe<LinksResponse.CreateResponse>> Create(
         LinksRequest.CreateRequest data)
     {
-        return _linksService.Create(data);
+        return await _linksService.Create(data);
     }
 }

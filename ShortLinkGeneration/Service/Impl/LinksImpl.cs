@@ -29,7 +29,7 @@ public class LinksImpl : ILinksService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public IRe<LinksResponse.CreateResponse> Create(LinksRequest.CreateRequest data)
+    public async Task<IRe<LinksResponse.CreateResponse>> Create(LinksRequest.CreateRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -59,9 +59,9 @@ public class LinksImpl : ILinksService
                 MaxClicks = data.MaxClicks,
                 IsDisabled = false
             });
-            
+
             //保存数据库
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return new Ok<LinksResponse.CreateResponse>
             {
@@ -116,9 +116,9 @@ public class LinksImpl : ILinksService
                 MaxClicks = data.MaxClicks,
                 IsDisabled = false
             });
-            
+
             //保存数据库
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return new Ok<LinksResponse.CreateResponse>
             {
@@ -135,7 +135,9 @@ public class LinksImpl : ILinksService
     /// <summary>
     /// 游客生成短连接
     /// </summary>
+    /// <param name="shortLink"></param>
     /// <param name="longLink"></param>
+    /// <param name="expiryDate"></param>
     /// <returns></returns>
     private string CreateShortLink(string? shortLink, string longLink, DateTime? expiryDate, int? maxClicks)
     {

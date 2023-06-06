@@ -27,10 +27,10 @@ public class UsersController
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("register")]
-    public IRe<UsersResponse.RegisterResponse> Register(
+    public async Task<IRe<UsersResponse.RegisterResponse>> Register(
         UsersRequest.RegisterRequest data)
     {
-        return _usersService.Register(data);
+        return await _usersService.Register(data);
     }
 
     /// <summary>
@@ -39,10 +39,10 @@ public class UsersController
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("login")]
-    public IRe<UsersResponse.LoginResponse> Login(
+    public async Task<IRe<UsersResponse.LoginResponse>> Login(
         UsersRequest.LoginRequest data)
     {
-        return _usersService.Login(data);
+        return await _usersService.Login(data);
     }
 
     /// <summary>
@@ -51,10 +51,10 @@ public class UsersController
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("sendCode")]
-    public IRe<UsersResponse.SendCodeResponse> SendCode(
+    public async Task<IRe<UsersResponse.SendCodeResponse>> SendCode(
         UsersRequest.SendCodeRequest data)
     {
-        return _usersService.SendCode(data);
+        return await _usersService.SendCode(data);
     }
 
     /// <summary>
@@ -64,10 +64,10 @@ public class UsersController
     /// <returns></returns>
     [Auth]
     [HttpPost("info")]
-    public IRe<UsersResponse.InfoResponse> Info(
+    public async Task<IRe<UsersResponse.InfoResponse>> Info(
         UsersRequest.InfoRequest data)
     {
-        return _usersService.Info(data);
+        return await _usersService.Info(data);
     }
 
     /// <summary>
@@ -77,21 +77,21 @@ public class UsersController
     /// <returns></returns>
     [Auth]
     [HttpPost("update-password")]
-    public IRe<UsersResponse.UpdatePasswordResponse> UpdatePassword(
+    public async Task<IRe<UsersResponse.UpdatePasswordResponse>> UpdatePassword(
         UsersRequest.UpdatePasswordRequest data)
     {
-        return _usersService.UpdatePassword(data);
+        return await _usersService.UpdatePassword(data);
     }
-    
+
     /// <summary>
     /// 重置密码
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("reset-password")]
-    public IRe<UsersResponse.ResetPasswordResponse> ResetPassword(
+    public async Task<IRe<UsersResponse.ResetPasswordResponse>> ResetPassword(
         UsersRequest.ResetPasswordRequest data)
     {
-        return _usersService.ResetPassword(data);
+        return await _usersService.ResetPassword(data);
     }
 }

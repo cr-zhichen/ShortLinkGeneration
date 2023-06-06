@@ -6,10 +6,10 @@ namespace ShortLinkGeneration.Service.Service;
 
 public interface IUsersService
 {
-    public IRe<UsersResponse.RegisterResponse> Register(UsersRequest.RegisterRequest data);
-    public IRe<UsersResponse.LoginResponse> Login(UsersRequest.LoginRequest data);
-    public IRe<UsersResponse.SendCodeResponse> SendCode(UsersRequest.SendCodeRequest data);
-    public IRe<UsersResponse.InfoResponse> Info(UsersRequest.InfoRequest data);
-    public IRe<UsersResponse.UpdatePasswordResponse> UpdatePassword(UsersRequest.UpdatePasswordRequest data);
-    public IRe<UsersResponse.ResetPasswordResponse> ResetPassword(UsersRequest.ResetPasswordRequest data);
+    public Task<IRe<UsersResponse.RegisterResponse>> Register(UsersRequest.RegisterRequest data);
+    public Task<IRe<UsersResponse.LoginResponse>> Login(UsersRequest.LoginRequest data);
+    public Task<IRe<UsersResponse.SendCodeResponse>> SendCode(UsersRequest.SendCodeRequest data);
+    public Task<IRe<UsersResponse.InfoResponse>> Info(UsersRequest.InfoRequest data);
+    public Task<IRe<UsersResponse.UpdatePasswordResponse>> UpdatePassword(UsersRequest.UpdatePasswordRequest data);
+    public Task<IRe<UsersResponse.ResetPasswordResponse>> ResetPassword(UsersRequest.ResetPasswordRequest data);
 }

@@ -33,7 +33,7 @@ public class UsersImpl : IUsersService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public IRe<UsersResponse.RegisterResponse> Register(UsersRequest.RegisterRequest data)
+    public async Task<IRe<UsersResponse.RegisterResponse>> Register(UsersRequest.RegisterRequest data)
     {
         //判断账号密码格式是否正确
         if (!data.Username.IsEmail() || !data.Password.IsPassword())
@@ -77,7 +77,7 @@ public class UsersImpl : IUsersService
             CreationTime = DateTime.Now,
         };
         _db.Users.Add(newUser);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
 
         //生成Token
         string token = _jwtService.CreateTokenAsync(newUser.Username, newUser.Role).Result;
@@ -95,7 +95,7 @@ public class UsersImpl : IUsersService
         };
     }
 
-    public IRe<UsersResponse.LoginResponse> Login(UsersRequest.LoginRequest data)
+    public async Task<IRe<UsersResponse.LoginResponse>> Login(UsersRequest.LoginRequest data)
     {
         //判断账号密码格式是否正确
         if (!data.Username.IsEmail() || !data.Password.IsPassword())
@@ -143,7 +143,7 @@ public class UsersImpl : IUsersService
         };
     }
 
-    public IRe<UsersResponse.SendCodeResponse> SendCode(UsersRequest.SendCodeRequest data)
+    public async Task<IRe<UsersResponse.SendCodeResponse>> SendCode(UsersRequest.SendCodeRequest data)
     {
         //判断邮箱格式是否正确
         if (!data.Username.IsEmail())
@@ -206,7 +206,7 @@ public class UsersImpl : IUsersService
         }
     }
 
-    public IRe<UsersResponse.InfoResponse> Info(UsersRequest.InfoRequest data)
+    public async Task<IRe<UsersResponse.InfoResponse>> Info(UsersRequest.InfoRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -249,7 +249,7 @@ public class UsersImpl : IUsersService
         };
     }
 
-    public IRe<UsersResponse.UpdatePasswordResponse> UpdatePassword(UsersRequest.UpdatePasswordRequest data)
+    public async Task<IRe<UsersResponse.UpdatePasswordResponse>> UpdatePassword(UsersRequest.UpdatePasswordRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -299,10 +299,10 @@ public class UsersImpl : IUsersService
         //更新密码
         user.PasswordHash = data.NewPassword.HashPassword(user.Username);
         _db.Users.Update(user);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
 
         //注销Token
-        _jwtService.LogoutAsync(token);
+        await _jwtService.LogoutAsync(token);
 
         return new Ok<UsersResponse.UpdatePasswordResponse>
         {
@@ -311,7 +311,7 @@ public class UsersImpl : IUsersService
         };
     }
 
-    public IRe<UsersResponse.ResetPasswordResponse> ResetPassword(UsersRequest.ResetPasswordRequest data)
+    public async Task<IRe<UsersResponse.ResetPasswordResponse>> ResetPassword(UsersRequest.ResetPasswordRequest data)
     {
         //判断验证码是否正确
         if (!VerificationCode.VerificationCodeList.Any(v => v.Email == data.Username && v.Code == data.Code))
@@ -348,10 +348,10 @@ public class UsersImpl : IUsersService
         //更新密码
         user.PasswordHash = data.NewPassword.HashPassword(user.Username);
         _db.Users.Update(user);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
 
         //注销Token
-        _jwtService.LogoutAsync(data.Username);
+        await _jwtService.LogoutAsync(data.Username);
 
         return new Ok<UsersResponse.ResetPasswordResponse>
         {

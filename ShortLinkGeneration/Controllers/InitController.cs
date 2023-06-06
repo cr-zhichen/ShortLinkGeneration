@@ -27,9 +27,9 @@ public class InitController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("db")]
-    public IRe<InitResponse.InitDbResponse> InitDb()
+    public async Task<IRe<InitResponse.InitDbResponse>> InitDb()
     {
-        return _initService.InitDb();
+        return await _initService.InitDb();
     }
 
     /// <summary>
@@ -37,9 +37,9 @@ public class InitController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("admin")]
-    public IRe<InitResponse.InitAdminResponse> InitAdmin(
+    public async Task<IRe<InitResponse.InitAdminResponse>> InitAdmin(
         InitRequest.InitAdminRequest data)
     {
-        return _initService.InitAdmin(data);
+        return await _initService.InitAdmin(data);
     }
 }
