@@ -24,6 +24,13 @@ public interface IJwtService
     /// <param name="requiredRole"></param>
     /// <returns></returns>
     Task<bool> ValidateTokenAsync(string token, string requiredRole = "");
+
+    /// <summary>
+    /// 获取令牌中的用户名
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task<string> GetUsernameAsync(string token);
 }
 
 // 实现
@@ -110,5 +117,36 @@ public class JwtService : IJwtService
         }
 
         return Task.FromResult(true);
+    }
+
+    /// <summary>
+    /// 从令牌中获取用户名
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<string> GetUsernameAsync(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenOptions.SecretKey)),
+            ValidateIssuer = true,
+            ValidIssuer = TokenOptions.Issuer,
+            ValidateAudience = true,
+            ValidAudience = TokenOptions.Audience
+        };
+
+        try
+        {
+            tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            var userClaim = jwtToken.Claims.First(claim => claim.Type == "user");
+            return Task.FromResult(userClaim.Value);
+        }
+        catch
+        {
+            return Task.FromResult("");
+        }
     }
 }

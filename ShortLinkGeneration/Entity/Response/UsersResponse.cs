@@ -69,7 +69,7 @@ public class UsersResponse
         /// <summary>
         /// 用户创建时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public DateTime CreationTime { get; set; }
         /// <summary>
         /// 用户创建的短链接数量
         /// </summary>

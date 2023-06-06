@@ -6,11 +6,14 @@ using ShortLinkGeneration.Service;
 
 namespace ShortLinkGeneration.Attribute;
 
-public class ValidateJwtTokenAttribute : ActionFilterAttribute
+/// <summary>
+/// 验证JWT Token
+/// </summary>
+public class AuthAttribute : ActionFilterAttribute
 {
     private readonly string _requiredRole;
 
-    public ValidateJwtTokenAttribute(string requiredRole = "")
+    public AuthAttribute(string requiredRole = "")
     {
         _requiredRole = requiredRole;
     }

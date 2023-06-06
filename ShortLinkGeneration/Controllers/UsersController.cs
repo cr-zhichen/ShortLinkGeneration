@@ -62,7 +62,7 @@ public class UsersController
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    [ValidateJwtToken]
+    [Auth]
     [HttpPost("info")]
     public IRe<UsersResponse.InfoResponse> Info(
         UsersRequest.InfoRequest data)

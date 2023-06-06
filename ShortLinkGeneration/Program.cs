@@ -37,6 +37,7 @@ builder.Services.AddDbContext<ShortLinkContext>(options =>
 builder.Services.AddScoped<IInitService, InitImpl>();
 builder.Services.AddScoped<IUsersService, UsersImpl>();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP"));
 
 //开启定时任务

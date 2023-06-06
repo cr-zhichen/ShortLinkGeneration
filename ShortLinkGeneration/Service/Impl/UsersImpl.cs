@@ -16,14 +16,21 @@ public class UsersImpl : IUsersService
     private readonly ShortLinkContext _db;
     private readonly IJwtService _jwtService;
     private readonly IOptions<ConfigOptions> _config;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UsersImpl(ILogger<UsersImpl> logger, ShortLinkContext db, IJwtService jwtService,
-        IOptions<ConfigOptions> config)
+    public UsersImpl(
+        ILogger<UsersImpl> logger,
+        ShortLinkContext db,
+        IJwtService jwtService,
+        IOptions<ConfigOptions> config,
+        IHttpContextAccessor httpContextAccessor
+    )
     {
         _logger = logger;
         _db = db;
         _jwtService = jwtService;
         _config = config;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public IRe<UsersResponse.RegisterResponse> Register(UsersRequest.RegisterRequest data)
@@ -199,8 +206,46 @@ public class UsersImpl : IUsersService
         }
     }
 
-    IRe<UsersResponse.InfoResponse> IUsersService.Info(UsersRequest.InfoRequest data)
+    public IRe<UsersResponse.InfoResponse> Info(UsersRequest.InfoRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+        //从Token中获取用户名
+        string username = _jwtService.GetUsernameAsync(token).Result;
+        if (username == "")
+        {
+            return new Error<UsersResponse.InfoResponse>
+            {
+                Code = Code.TokenError,
+                Message = "Token错误"
+            };
+        }
+
+        //从数据库中获取用户信息
+        var user = _db.Users.FirstOrDefault(u => u.Username == username);
+        if (user == null)
+        {
+            return new Error<UsersResponse.InfoResponse>
+            {
+                Code = Code.UsernameNotExist,
+                Message = "账号不存在"
+            };
+        }
+
+        //从数据库中获取用户创建的短连接数量
+        int shortLinkCount = _db.Links.Count(l => l.UserID == user.UserID);
+
+        return new Ok<UsersResponse.InfoResponse>
+        {
+            Code = Code.Success,
+            Message = "获取成功",
+            Data = new UsersResponse.InfoResponse
+            {
+                Username = user.Username,
+                Role = user.Role,
+                CreationTime = user.CreationTime,
+                LinkCount = shortLinkCount
+            }
+        };
     }
 }
