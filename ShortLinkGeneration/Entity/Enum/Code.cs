@@ -66,4 +66,9 @@ public enum Code
     /// 密码格式错误
     /// </summary>
     PasswordFormatError = 11,
+    
+    /// <summary>
+    /// 短连接重复
+    /// </summary>
+    ShortLinkExists = 12,
 }

@@ -11,7 +11,7 @@ using ShortLinkGeneration.DB;
 namespace ShortLinkGeneration.Migrations
 {
     [DbContext(typeof(ShortLinkContext))]
-    [Migration("20230604124955_Initial")]
+    [Migration("20230606083415_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace ShortLinkGeneration.Migrations
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime");
 
-                    b.Property<bool>("IsDelayed")
+                    b.Property<bool>("IsDisabled")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int?>("MaxClicks")
@@ -74,7 +74,7 @@ namespace ShortLinkGeneration.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("LinkID");
@@ -99,7 +99,7 @@ namespace ShortLinkGeneration.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -125,9 +125,7 @@ namespace ShortLinkGeneration.Migrations
                 {
                     b.HasOne("ShortLinkGeneration.DB.User", "User")
                         .WithMany("Links")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID");
 
                     b.Navigation("User");
                 });

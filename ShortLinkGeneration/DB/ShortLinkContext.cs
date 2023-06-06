@@ -1,4 +1,5 @@
 // 引入 Entity Framework Core 命名空间
+
 using Microsoft.EntityFrameworkCore;
 
 namespace ShortLinkGeneration.DB
@@ -14,8 +15,10 @@ namespace ShortLinkGeneration.DB
 
         // 定义 DbSet 类型的属性，表示在数据库中可以查询的 User 类型的集合
         public DbSet<User> Users { get; set; }
+
         // 定义 DbSet 类型的属性，表示在数据库中可以查询的 Link 类型的集合
         public DbSet<Link> Links { get; set; }
+
         // 定义 DbSet 类型的属性，表示在数据库中可以查询的 Click 类型的集合
         public DbSet<Click> Clicks { get; set; }
 
@@ -27,24 +30,12 @@ namespace ShortLinkGeneration.DB
             modelBuilder.Entity<User>()
                 .Property(e => e.Role)
                 .HasConversion<string>();
-
-            // 配置 Link 实体与 User 实体的关系
-            // HasOne 方法表示 Link 实体中有一个 User 实体
-            // WithMany 方法表示一个 User 实体可以对应多个 Link 实体
-            // HasForeignKey 方法表示 Link 实体中的 UserID 属性是一个外键，引用 User 实体
+            
             modelBuilder.Entity<Link>()
                 .HasOne(p => p.User)
                 .WithMany(b => b.Links)
-                .HasForeignKey(p => p.UserID);
-
-            // 配置 Click 实体与 Link 实体的关系
-            // HasOne 方法表示 Click 实体中有一个 Link 实体
-            // WithMany 方法表示一个 Link 实体可以对应多个 Click 实体
-            // HasForeignKey 方法表示 Click 实体中的 LinkID 属性是一个外键，引用 Link 实体
-            modelBuilder.Entity<Click>()
-                .HasOne(p => p.Link)
-                .WithMany(b => b.Clicks)
-                .HasForeignKey(p => p.LinkID);
+                .HasForeignKey(p => p.UserID)
+                .IsRequired(false); // 添加这一行来允许外键为空
         }
     }
 }

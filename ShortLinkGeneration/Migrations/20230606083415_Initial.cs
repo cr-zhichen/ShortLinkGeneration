@@ -25,7 +25,7 @@ namespace ShortLinkGeneration.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordHash = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Role = table.Column<string>(type: "longtext", nullable: false)
+                    Role = table.Column<string>(type: "varchar(10)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreationTime = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
@@ -45,12 +45,12 @@ namespace ShortLinkGeneration.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     OriginalLink = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     ClickCount = table.Column<int>(type: "int", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     MaxClicks = table.Column<int>(type: "int", nullable: true),
-                    IsDelayed = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    IsDisabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,8 +59,7 @@ namespace ShortLinkGeneration.Migrations
                         name: "FK_Links_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserID");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

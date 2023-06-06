@@ -59,7 +59,7 @@ public class InitImpl : IInitService
         InitRequest.InitAdminRequest data)
     {
         //判断是否存在管理员账户
-        if (_db.Users.Any())
+        if (_db.Users.Any(x => x.Role == Role.Admin))
         {
             _logger.LogInformation("管理员账户已存在");
             return new Error<InitResponse.InitAdminResponse>
