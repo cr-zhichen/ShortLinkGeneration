@@ -9,6 +9,7 @@ public static class TokenList
     /// </summary>
     public class TokenItem
     {
+        public string Username { get; set; }
         public string Token { get; set; }
     }
 }

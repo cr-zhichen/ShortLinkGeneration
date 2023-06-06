@@ -82,6 +82,7 @@ public class JwtService : IJwtService
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         TokenList.TokenLists.Add(new TokenList.TokenItem()
         {
+            Username = username,
             Token = token
         });
         return Task.FromResult(token);
