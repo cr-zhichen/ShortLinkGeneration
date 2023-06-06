@@ -10,4 +10,5 @@ public interface IUsersService
 
     public IRe<UsersResponse.LoginResponse> Login(UsersRequest.LoginRequest data);
     public IRe<UsersResponse.SendCodeResponse> SendCode(UsersRequest.SendCodeRequest data);
+    public IRe<UsersResponse.InfoResponse> Info(UsersRequest.InfoRequest data);
 }

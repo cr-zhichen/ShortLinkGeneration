@@ -52,4 +52,11 @@ public class UsersRequest
         /// </summary>
         public string Username { get; set; }
     }
+
+    /// <summary>
+    /// 返回当前登录用户的信息请求实体
+    /// </summary>
+    public class InfoRequest{
+
+    }
 }

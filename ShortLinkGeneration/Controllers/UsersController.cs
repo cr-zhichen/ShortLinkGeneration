@@ -55,4 +55,17 @@ public class UsersController
     {
         return _usersService.SendCode(data);
     }
+
+    /// <summary>
+    /// 返回当前登录用户的信息
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [HttpPost("info")]
+    public IRe<UsersResponse.InfoResponse> Info(
+        UsersRequest.InfoRequest data)
+    {
+        return _usersService.Info(data);
+    }
+
 }

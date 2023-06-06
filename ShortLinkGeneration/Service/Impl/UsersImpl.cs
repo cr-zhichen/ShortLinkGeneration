@@ -198,4 +198,9 @@ public class UsersImpl : IUsersService
             };
         }
     }
+
+    IRe<UsersResponse.InfoResponse> IUsersService.Info(UsersRequest.InfoRequest data)
+    {
+        throw new NotImplementedException();
+    }
 }
