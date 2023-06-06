@@ -83,7 +83,8 @@ public class JwtService : IJwtService
         TokenList.TokenLists.Add(new TokenList.TokenItem()
         {
             Username = username,
-            Token = token
+            Token = token,
+            ExpireTime = expires
         });
         return Task.FromResult(token);
     }

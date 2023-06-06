@@ -11,5 +11,6 @@ public static class TokenList
     {
         public string Username { get; set; }
         public string Token { get; set; }
+        public DateTime ExpireTime { get; set; }
     }
 }

@@ -42,10 +42,10 @@ builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP
 
 //开启定时任务
 ScheduledTask.Add("clearVerificationCode",
-    () =>
-    {
-        VerificationCode.VerificationCodeList.RemoveAll(item => item.ExpireTime < DateTime.Now);
-    }, 60);
+    () => { VerificationCode.VerificationCodeList.RemoveAll(item => item.ExpireTime < DateTime.Now); }, 60);
+
+ScheduledTask.Add("clearExpiredToken",
+    () => { TokenList.TokenLists.RemoveAll(item => item.ExpireTime < DateTime.Now); }, 60);
 
 #region 配置JWT
 
