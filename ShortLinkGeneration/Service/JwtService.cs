@@ -18,7 +18,7 @@ public interface IJwtService
     Task<string> CreateTokenAsync(string username, string role);
 
     /// <summary>
-    /// 验证令牌
+    /// 验证令牌身份
     /// </summary>
     /// <param name="token"></param>
     /// <param name="requiredRole"></param>
@@ -36,6 +36,12 @@ public class JwtService : IJwtService
         TokenOptions = options.Value;
     }
 
+    /// <summary>
+    /// 创建令牌
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="role"></param>
+    /// <returns></returns>
     public Task<string> CreateTokenAsync(string username, string role)
     {
         // 添加一些需要的键值对
@@ -60,7 +66,13 @@ public class JwtService : IJwtService
         return Task.FromResult(token);
     }
 
-    public Task<bool> ValidateTokenAsync(string token, string requiredRole)
+    /// <summary>
+    /// 验证令牌身份
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="requiredRole"></param>
+    /// <returns></returns>
+    public Task<bool> ValidateTokenAsync(string token, string requiredRole = "")
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var validationParameters = new TokenValidationParameters
@@ -76,6 +88,11 @@ public class JwtService : IJwtService
         try
         {
             tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+
+            if (requiredRole == "")
+            {
+                return Task.FromResult(true);
+            }
 
             // Now we get the token and check the role claim
             var jwtToken = (JwtSecurityToken)validatedToken;
