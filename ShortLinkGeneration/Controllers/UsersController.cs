@@ -70,4 +70,28 @@ public class UsersController
         return _usersService.Info(data);
     }
 
+    /// <summary>
+    /// 更新密码
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("update-password")]
+    public IRe<UsersResponse.UpdatePasswordResponse> UpdatePassword(
+        UsersRequest.UpdatePasswordRequest data)
+    {
+        return _usersService.UpdatePassword(data);
+    }
+    
+    /// <summary>
+    /// 重置密码
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [HttpPost("reset-password")]
+    public IRe<UsersResponse.ResetPasswordResponse> ResetPassword(
+        UsersRequest.ResetPasswordRequest data)
+    {
+        return _usersService.ResetPassword(data);
+    }
 }

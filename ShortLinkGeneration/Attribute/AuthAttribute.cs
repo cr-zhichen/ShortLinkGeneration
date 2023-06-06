@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using ShortLinkGeneration.Entity;
 using ShortLinkGeneration.Entity.Enum;
 using ShortLinkGeneration.Service;
+using ShortLinkGeneration.Static;
 
 namespace ShortLinkGeneration.Attribute;
 
@@ -26,6 +27,9 @@ public class AuthAttribute : ActionFilterAttribute
         var jwtService = context.HttpContext.RequestServices.GetService<IJwtService>();
 
         var isValid = await jwtService.ValidateTokenAsync(token, _requiredRole);
+
+        //判断令牌是否在缓存中
+        isValid = isValid && TokenList.TokenLists.Any(x => x.Token == token);
 
         if (!isValid)
         {

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ShortLinkGeneration.Static;
 
 namespace ShortLinkGeneration.Service;
 
@@ -31,6 +32,13 @@ public interface IJwtService
     /// <param name="token"></param>
     /// <returns></returns>
     Task<string> GetUsernameAsync(string token);
+
+    /// <summary>
+    /// 注销令牌
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    Task LogoutAsync(string token);
 }
 
 // 实现
@@ -62,14 +70,20 @@ public class JwtService : IJwtService
         var creds = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
             SecurityAlgorithms.HmacSha256);
 
+        var expires = DateTime.Now.AddMinutes(TokenOptions.ExpireMinutes);
+
         var jwtSecurityToken = new JwtSecurityToken(
             issuer: TokenOptions.Issuer, // 签发者
             audience: TokenOptions.Audience, // 接收者
             claims: claims, // payload
-            expires: DateTime.Now.AddMinutes(TokenOptions.ExpireMinutes), // 过期时间
+            expires: expires, // 过期时间
             signingCredentials: creds); // 令牌
 
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        TokenList.TokenLists.Add(new TokenList.TokenItem()
+        {
+            Token = token
+        });
         return Task.FromResult(token);
     }
 
@@ -148,5 +162,21 @@ public class JwtService : IJwtService
         {
             return Task.FromResult("");
         }
+    }
+
+    /// <summary>
+    /// 注销令牌
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task LogoutAsync(string token)
+    {
+        var tokenToRemove = TokenList.TokenLists.Find(x => x.Token == token);
+        if (tokenToRemove != null)
+        {
+            TokenList.TokenLists.Remove(tokenToRemove);
+        }
+
+        return Task.CompletedTask;
     }
 }

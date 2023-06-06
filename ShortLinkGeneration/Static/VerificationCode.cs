@@ -5,12 +5,12 @@ namespace ShortLinkGeneration.Static;
 /// </summary>
 public static class VerificationCode
 {
-    public static List<VerificationCodeTemporaryStorage> VerificationCodeList = new();
+    public static List<VerificationCodeItem> VerificationCodeList = new();
 
     /// <summary>
     /// 验证码暂存
     /// </summary>
-    public class VerificationCodeTemporaryStorage
+    public class VerificationCodeItem
     {
         public string Email { get; set; }
         public DateTime ExpireTime { get; set; }

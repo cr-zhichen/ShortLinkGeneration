@@ -60,5 +60,10 @@ public enum Code
     /// <summary>
     /// Token错误
     /// </summary>
-    TokenError = 10
+    TokenError = 10,
+    
+    /// <summary>
+    /// 密码格式错误
+    /// </summary>
+    PasswordFormatError = 11,
 }

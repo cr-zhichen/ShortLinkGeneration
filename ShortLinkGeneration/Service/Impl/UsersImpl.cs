@@ -248,4 +248,115 @@ public class UsersImpl : IUsersService
             }
         };
     }
+
+    public IRe<UsersResponse.UpdatePasswordResponse> UpdatePassword(UsersRequest.UpdatePasswordRequest data)
+    {
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+        //从Token中获取用户名
+        string username = _jwtService.GetUsernameAsync(token).Result;
+        if (username == "")
+        {
+            return new Error<UsersResponse.UpdatePasswordResponse>
+            {
+                Code = Code.TokenError,
+                Message = "Token错误"
+            };
+        }
+
+        //从数据库中获取用户信息
+        var user = _db.Users.FirstOrDefault(u => u.Username == username);
+
+        if (user == null)
+        {
+            return new Error<UsersResponse.UpdatePasswordResponse>
+            {
+                Code = Code.UsernameNotExist,
+                Message = "账号不存在"
+            };
+        }
+
+        //判断旧密码是否正确
+        if (!data.OldPassword.VerifyPassword(user.PasswordHash, user.Username))
+        {
+            return new Error<UsersResponse.UpdatePasswordResponse>
+            {
+                Code = Code.PasswordError,
+                Message = "旧密码错误"
+            };
+        }
+
+        //判断新密码格式是否正确
+        if (!data.NewPassword.IsPassword())
+        {
+            return new Error<UsersResponse.UpdatePasswordResponse>
+            {
+                Code = Code.PasswordFormatError,
+                Message = "新密码格式错误"
+            };
+        }
+
+        //更新密码
+        user.PasswordHash = data.NewPassword.HashPassword(user.Username);
+        _db.Users.Update(user);
+        _db.SaveChanges();
+
+        //注销Token
+        _jwtService.LogoutAsync(token);
+
+        return new Ok<UsersResponse.UpdatePasswordResponse>
+        {
+            Code = Code.Success,
+            Message = "修改成功"
+        };
+    }
+
+    public IRe<UsersResponse.ResetPasswordResponse> ResetPassword(UsersRequest.ResetPasswordRequest data)
+    {
+        //判断验证码是否正确
+        if (!VerificationCode.VerificationCodeList.Any(v => v.Email == data.Username && v.Code == data.Code))
+        {
+            return new Error<UsersResponse.ResetPasswordResponse>
+            {
+                Code = Code.CodeError,
+                Message = "验证码错误"
+            };
+        }
+
+        //从数据库中获取用户信息
+        var user = _db.Users.FirstOrDefault(u => u.Username == data.Username);
+
+        if (user == null)
+        {
+            return new Error<UsersResponse.ResetPasswordResponse>
+            {
+                Code = Code.UsernameNotExist,
+                Message = "账号不存在"
+            };
+        }
+
+        //判断新密码格式是否正确
+        if (!data.NewPassword.IsPassword())
+        {
+            return new Error<UsersResponse.ResetPasswordResponse>
+            {
+                Code = Code.PasswordFormatError,
+                Message = "新密码格式错误"
+            };
+        }
+
+        //更新密码
+        user.PasswordHash = data.NewPassword.HashPassword(user.Username);
+        _db.Users.Update(user);
+        _db.SaveChanges();
+
+        //注销Token
+        _jwtService.LogoutAsync(data.Username);
+
+        return new Ok<UsersResponse.ResetPasswordResponse>
+        {
+            Code = Code.Success,
+            Message = "修改成功"
+        };
+    }
 }
