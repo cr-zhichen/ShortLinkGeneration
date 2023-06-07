@@ -42,6 +42,16 @@ public class LinksImpl : ILinksService
                 Message = "短连接已存在"
             };
         }
+        
+        //判断长连接格式
+        if (!data.LongLink.IsUrl())
+        {
+            return new Error<LinksResponse.CreateResponse>
+            {
+                Code = Code.LongLinkFormatError,
+                Message = "长连接格式错误"
+            };
+        }
 
         string shortLink;
         //Token不存在，直接生成短链接
