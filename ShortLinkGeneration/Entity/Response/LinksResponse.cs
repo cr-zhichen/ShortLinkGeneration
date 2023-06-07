@@ -35,7 +35,12 @@ public class LinksResponse
         /// <summary>
         /// 连接列表
         /// </summary>
-        public List<LinkItem> LinkList { get; set; }
+        public List<LinkItemResponse> LinkList { get; set; }
+
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount { get; set; }
     }
 
     /// <summary>
@@ -46,7 +51,7 @@ public class LinksResponse
         /// <summary>
         /// 链接信息
         /// </summary>
-        public LinkItem Link { get; set; }
+        public LinkItemResponse Link { get; set; }
     }
 
     /// <summary>
@@ -57,7 +62,12 @@ public class LinksResponse
         /// <summary>
         /// 链接信息
         /// </summary>
-        public LinkItem Link { get; set; }
+        public List<LinkItemResponse> LinkList { get; set; }
+
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount { get; set; }
     }
 
     /// <summary>
@@ -78,7 +88,7 @@ public class LinksResponse
     /// <summary>
     /// 链接列表项
     /// </summary>
-    public class LinkItem
+    public class LinkItemResponse
     {
         /// <summary>
         /// 链接ID

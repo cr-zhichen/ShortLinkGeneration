@@ -47,6 +47,15 @@ public class LinksRequest
     /// </summary>
     public class GetAllRequest
     {
+        /// <summary>
+        /// 页数
+        /// </summary>
+        public int Page { get; set; }
+
+        /// <summary>
+        /// 每页数量
+        /// </summary>
+        public int PageSize { get; set; }
     }
 
     /// <summary>
@@ -69,6 +78,16 @@ public class LinksRequest
         /// 关键词
         /// </summary>
         public string keywords { get; set; }
+
+        /// <summary>
+        /// 页数
+        /// </summary>
+        public int Page { get; set; }
+
+        /// <summary>
+        /// 每页数量
+        /// </summary>
+        public int PageSize { get; set; }
     }
 
     /// <summary>
@@ -90,13 +109,13 @@ public class LinksRequest
         /// <summary>
         /// 连接信息
         /// </summary>
-        public LinkItem Link { get; set; }
+        public LinkItemRequest Link { get; set; }
     }
 
     /// <summary>
     /// 链接列表项
     /// </summary>
-    public class LinkItem
+    public class LinkItemRequest
     {
         /// <summary>
         /// 长链接

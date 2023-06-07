@@ -76,4 +76,9 @@ public enum Code
     /// 短连接生成失败
     /// </summary>
     ShortLinkGenerationFailed = 13,
+
+    /// <summary>
+    /// 链接不存在
+    /// </summary>
+    ShortLinkNotExist = 14,
 }

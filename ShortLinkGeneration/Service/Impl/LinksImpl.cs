@@ -184,17 +184,141 @@ public class LinksImpl : ILinksService
 
     public async Task<IRe<LinksResponse.GetAllResponse>> GetAll(LinksRequest.GetAllRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+
+        //从Token中获取用户名
+        var username = _jwtService.GetUsernameAsync(token).Result.ToString();
+
+        //根据用户名查找用户id
+        var userID = _db.Users.FirstOrDefault(x => x.Username == username)?.UserID;
+
+
+        //根据用户id查找短链接
+        var linkList = _db.Links
+            .Where(x => x.UserID == userID)
+            .Skip((data.Page - 1) * data.PageSize)
+            .Take(data.PageSize)
+            .ToList();
+
+        var pageCount = _db.Links.Count(x => x.UserID == userID) / data.PageSize + 1;
+
+        //返回数据
+        return new Ok<LinksResponse.GetAllResponse>
+        {
+            Code = Code.Success,
+            Message = "获取成功",
+            Data = new LinksResponse.GetAllResponse
+            {
+                LinkList = linkList.Select(x => new LinksResponse.LinkItemResponse
+                {
+                    LinkID = x.LinkID,
+                    ShortLink = x.ShortLink,
+                    LongLink = x.OriginalLink,
+                    CreationDate = x.CreationDate,
+                    ClickCount = x.ClickCount,
+                    ExpiryDate = x.ExpiryDate,
+                    MaxClicks = x.MaxClicks,
+                    IsDisabled = x.IsDisabled
+                }).ToList(),
+                PageCount = pageCount
+            }
+        };
     }
 
     public async Task<IRe<LinksResponse.GetResponse>> Get(LinksRequest.GetRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+
+        //从Token中获取用户名
+        var username = _jwtService.GetUsernameAsync(token).Result.ToString();
+
+        //根据用户名查找用户id
+        var userID = _db.Users.FirstOrDefault(x => x.Username == username)?.UserID;
+
+        //根据短链接查找短链接信息
+        var link = _db.Links.FirstOrDefault(x => x.LinkID == data.LinkID && x.UserID == userID);
+
+        //判断短链接是否存在
+        if (link is null)
+        {
+            return new Error<LinksResponse.GetResponse>
+            {
+                Code = Code.ShortLinkNotExist,
+                Message = "短链接不存在"
+            };
+        }
+
+        //返回数据
+        return new Ok<LinksResponse.GetResponse>
+        {
+            Code = Code.Success,
+            Message = "获取成功",
+            Data = new LinksResponse.GetResponse
+            {
+                Link = new LinksResponse.LinkItemResponse
+                {
+                    LinkID = link.LinkID,
+                    ShortLink = link.ShortLink,
+                    LongLink = link.OriginalLink,
+                    CreationDate = link.CreationDate,
+                    ClickCount = link.ClickCount,
+                    ExpiryDate = link.ExpiryDate,
+                    MaxClicks = link.MaxClicks,
+                    IsDisabled = link.IsDisabled
+                }
+            }
+        };
     }
 
     public async Task<IRe<LinksResponse.SearchResponse>> Search(LinksRequest.SearchRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+
+        //从Token中获取用户名
+        var username = _jwtService.GetUsernameAsync(token).Result.ToString();
+
+        //根据用户名查找用户id
+        var userID = _db.Users.FirstOrDefault(x => x.Username == username)?.UserID;
+
+        //模糊查找短链接
+        var linkList = _db.Links
+            .Where(x => x.UserID == userID &&
+                        (x.ShortLink.Contains(data.keywords) ||
+                         x.OriginalLink.Contains(data.keywords) ||
+                         x.LinkID.ToString().Contains(data.keywords)))
+            .Skip((data.Page - 1) * data.PageSize)
+            .Take(data.PageSize)
+            .ToList();
+
+        var pageCount = _db.Links.Count(x => x.UserID == userID &&
+                                             (x.ShortLink.Contains(data.keywords) ||
+                                              x.OriginalLink.Contains(data.keywords) ||
+                                              x.LinkID.ToString().Contains(data.keywords))) / data.PageSize + 1;
+
+        //返回数据
+        return new Ok<LinksResponse.SearchResponse>
+        {
+            Code = Code.Success,
+            Message = "获取成功",
+            Data = new LinksResponse.SearchResponse
+            {
+                LinkList = linkList.Select(x => new LinksResponse.LinkItemResponse
+                {
+                    LinkID = x.LinkID,
+                    ShortLink = x.ShortLink,
+                    LongLink = x.OriginalLink,
+                    CreationDate = x.CreationDate,
+                    ClickCount = x.ClickCount,
+                    ExpiryDate = x.ExpiryDate,
+                    MaxClicks = x.MaxClicks,
+                    IsDisabled = x.IsDisabled
+                }).ToList(),
+                PageCount = pageCount
+            }
+        };
     }
 
     public async Task<IRe<LinksResponse.UpdateResponse>> Update(LinksRequest.UpdateRequest data)
