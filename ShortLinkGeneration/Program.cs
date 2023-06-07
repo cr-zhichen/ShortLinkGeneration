@@ -6,9 +6,11 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ShortLinkGeneration.Attribute;
+using ShortLinkGeneration.Filter;
 using ShortLinkGeneration.Service;
 using ShortLinkGeneration.Static;
 using ShortLinkGeneration.Tool;
@@ -40,6 +42,15 @@ builder.Services.AddScoped<ILinksService, LinksImpl>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP"));
+
+//全局异常处理
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CustomerExceptionFilter>();
+});
+
+//关闭默认模型验证
+builder.Services.Configure<ApiBehaviorOptions>(opt => opt.SuppressModelStateInvalidFilter = true);
 
 //开启定时任务
 ScheduledTask.Add("clearVerificationCode",
