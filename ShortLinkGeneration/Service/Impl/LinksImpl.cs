@@ -182,6 +182,33 @@ public class LinksImpl : ILinksService
         }
     }
 
+    public async Task<IRe<LinksResponse.GetAllResponse>> GetAll(LinksRequest.GetAllRequest data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IRe<LinksResponse.GetResponse>> Get(LinksRequest.GetRequest data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IRe<LinksResponse.SearchResponse>> Search(LinksRequest.SearchRequest data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IRe<LinksResponse.UpdateResponse>> Update(LinksRequest.UpdateRequest data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IRe<LinksResponse.DeleteResponse>> Delete(LinksRequest.DeleteRequest data)
+    {
+        throw new NotImplementedException();
+    }
+
+    #region 工具方法
+
     /// <summary>
     /// 游客生成短连接
     /// </summary>
@@ -210,7 +237,6 @@ public class LinksImpl : ILinksService
 
         return shortLink;
     }
-
 
     /// <summary>
     /// 随机生成短连接
@@ -265,4 +291,6 @@ public class LinksImpl : ILinksService
 
         return regex.IsMatch(shortLink);
     }
+
+    #endregion
 }

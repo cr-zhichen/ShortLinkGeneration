@@ -43,4 +43,69 @@ public class linksController
     {
         return await _linksService.Detection(data);
     }
+
+    /// <summary>
+    /// 获取用户全部短链接列表 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("get-all")]
+    public async Task<IRe<LinksResponse.GetAllResponse>> GetAll(
+        LinksRequest.GetAllRequest data)
+    {
+        return await _linksService.GetAll(data);
+    }
+
+    /// <summary>
+    /// 获取指定的短链接的信息
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("get")]
+    public async Task<IRe<LinksResponse.GetResponse>> Get(
+        LinksRequest.GetRequest data)
+    {
+        return await _linksService.Get(data);
+    }
+
+    /// <summary>
+    /// 搜索短链接
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("search")]
+    public async Task<IRe<LinksResponse.SearchResponse>> Search(
+        LinksRequest.SearchRequest data)
+    {
+        return await _linksService.Search(data);
+    }
+
+    /// <summary>
+    /// 更新指定的短链接
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("update")]
+    public async Task<IRe<LinksResponse.UpdateResponse>> Update(
+        LinksRequest.UpdateRequest data)
+    {
+        return await _linksService.Update(data);
+    }
+
+    /// <summary>
+    /// 删除指定的短链接
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [Auth]
+    [HttpPost("delete")]
+    public async Task<IRe<LinksResponse.DeleteResponse>> Delete(
+        LinksRequest.DeleteRequest data)
+    {
+        return await _linksService.Delete(data);
+    }
 }
