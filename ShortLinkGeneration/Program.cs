@@ -47,6 +47,8 @@ builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<CustomerExceptionFilter>();
+    //添加过滤器
+    options.Filters.Add(typeof(ModelValidateActionFilterAttribute));
 });
 
 //关闭默认模型验证
