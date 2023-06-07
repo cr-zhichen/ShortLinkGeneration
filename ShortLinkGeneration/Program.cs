@@ -39,6 +39,7 @@ builder.Services.AddDbContext<ShortLinkContext>(options =>
 builder.Services.AddScoped<IInitService, InitImpl>();
 builder.Services.AddScoped<IUsersService, UsersImpl>();
 builder.Services.AddScoped<ILinksService, LinksImpl>();
+builder.Services.AddScoped<IRedirectService, RedirectImpl>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP"));

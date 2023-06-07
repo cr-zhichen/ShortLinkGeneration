@@ -323,12 +323,94 @@ public class LinksImpl : ILinksService
 
     public async Task<IRe<LinksResponse.UpdateResponse>> Update(LinksRequest.UpdateRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+
+        //从Token中获取用户名
+        var username = _jwtService.GetUsernameAsync(token).Result.ToString();
+
+        //根据用户名查找用户id
+        var userID = _db.Users.FirstOrDefault(x => x.Username == username)?.UserID;
+
+        //根据短链接查找短链接信息
+        var link = _db.Links.FirstOrDefault(x => x.LinkID == data.LinkID && x.UserID == userID);
+
+        //判断短链接是否存在
+        if (link is null)
+        {
+            return new Error<LinksResponse.UpdateResponse>
+            {
+                Code = Code.ShortLinkNotExist,
+                Message = "短链接不存在"
+            };
+        }
+
+        //更新短链接信息
+        link.OriginalLink = data.Link.LongLink;
+        link.ExpiryDate = data.Link.ExpiryDate;
+        link.MaxClicks = data.Link.MaxClicks;
+
+        //保存更改
+        await _db.SaveChangesAsync();
+
+        //返回数据
+        return new Ok<LinksResponse.UpdateResponse>
+        {
+            Code = Code.Success,
+            Message = "更新成功",
+            Data = new LinksResponse.UpdateResponse
+            {
+                Link = new LinksResponse.LinkItemResponse
+                {
+                    LinkID = link.LinkID,
+                    ShortLink = link.ShortLink,
+                    LongLink = link.OriginalLink,
+                    CreationDate = link.CreationDate,
+                    ClickCount = link.ClickCount,
+                    ExpiryDate = link.ExpiryDate,
+                    MaxClicks = link.MaxClicks,
+                    IsDisabled = link.IsDisabled
+                }
+            }
+        };
     }
 
     public async Task<IRe<LinksResponse.DeleteResponse>> Delete(LinksRequest.DeleteRequest data)
     {
-        throw new NotImplementedException();
+        //从Headers中获取Token
+        string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
+
+        //从Token中获取用户名
+        var username = _jwtService.GetUsernameAsync(token).Result.ToString();
+
+        //根据用户名查找用户id
+        var userID = _db.Users.FirstOrDefault(x => x.Username == username)?.UserID;
+
+        //根据短链接查找短链接信息
+        var link = _db.Links.FirstOrDefault(x => x.LinkID == data.LinkID && x.UserID == userID);
+
+        //判断短链接是否存在
+        if (link is null)
+        {
+            return new Error<LinksResponse.DeleteResponse>
+            {
+                Code = Code.ShortLinkNotExist,
+                Message = "短链接不存在"
+            };
+        }
+
+        //删除短链接
+        _db.Links.Remove(link);
+
+        //保存更改
+        await _db.SaveChangesAsync();
+
+        //返回数据
+        return new Ok<LinksResponse.DeleteResponse>
+        {
+            Code = Code.Success,
+            Message = "删除成功"
+        };
     }
 
     #region 工具方法

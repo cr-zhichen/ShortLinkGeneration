@@ -107,6 +107,11 @@ public class LinksRequest
     public class UpdateRequest
     {
         /// <summary>
+        /// 链接ID
+        /// </summary>
+        public int LinkID { get; set; }
+
+        /// <summary>
         /// 连接信息
         /// </summary>
         public LinkItemRequest Link { get; set; }

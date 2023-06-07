@@ -75,6 +75,10 @@ public class LinksResponse
     /// </summary>
     public class UpdateResponse
     {
+        /// <summary>
+        /// 链接信息
+        /// </summary>
+        public LinkItemResponse Link { get; set; }
     }
 
     /// <summary>
