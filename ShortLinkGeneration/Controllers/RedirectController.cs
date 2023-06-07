@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ShortLinkGeneration.Entity;
 using ShortLinkGeneration.Entity.Enum;
+using ShortLinkGeneration.Entity.Request;
+using ShortLinkGeneration.Entity.Response;
 using ShortLinkGeneration.Service.Service;
 
 namespace ShortLinkGeneration.Controllers;
@@ -25,8 +27,20 @@ public class RedirectController
     /// <param name="shortLink"></param>
     /// <returns></returns>
     [HttpGet("{shortLink}")]
-    public async Task<IActionResult> Redirect(string shortLink)
+    public async Task<IActionResult> RedirectGet(string shortLink)
     {
         return await _redirectService.Redirect(shortLink);
+    }
+
+    /// <summary>
+    /// 连接重定向
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    [HttpPost("api/redirect")]
+    public async Task<IRe<RedirectResponse.RedirectPostResponse>> RedirectPost(
+        RedirectRequest.RedirectPostRequest data)
+    {
+        return await _redirectService.RedirectPost(data);
     }
 }
