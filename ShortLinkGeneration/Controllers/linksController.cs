@@ -27,8 +27,8 @@ public class linksController
     /// <param name="data"></param>
     /// <returns></returns>
     [HttpPost("create")]
-    public async Task<IRe<LinksResponse.CreateResponse>> Create(
-        LinksRequest.CreateRequest data)
+    public async Task<IRe<LinksResponse.CreateLinkResponse>> Create(
+        LinksRequest.CreateLinkRequest data)
     {
         return await _linksService.Create(data);
     }
@@ -51,8 +51,8 @@ public class linksController
     /// <returns></returns>
     [Auth]
     [HttpPost("get-all")]
-    public async Task<IRe<LinksResponse.GetAllResponse>> GetAll(
-        LinksRequest.GetAllRequest data)
+    public async Task<IRe<LinksResponse.GetAllLinkResponse>> GetAll(
+        LinksRequest.GetAllLinkRequest data)
     {
         return await _linksService.GetAll(data);
     }
@@ -64,8 +64,8 @@ public class linksController
     /// <returns></returns>
     [Auth]
     [HttpPost("get")]
-    public async Task<IRe<LinksResponse.GetResponse>> Get(
-        LinksRequest.GetRequest data)
+    public async Task<IRe<LinksResponse.GetLinkResponse>> Get(
+        LinksRequest.GetLinkRequest data)
     {
         return await _linksService.Get(data);
     }
@@ -77,8 +77,8 @@ public class linksController
     /// <returns></returns>
     [Auth]
     [HttpPost("search")]
-    public async Task<IRe<LinksResponse.SearchResponse>> Search(
-        LinksRequest.SearchRequest data)
+    public async Task<IRe<LinksResponse.SearchLinkResponse>> Search(
+        LinksRequest.SearchLinkRequest data)
     {
         return await _linksService.Search(data);
     }
@@ -90,8 +90,8 @@ public class linksController
     /// <returns></returns>
     [Auth]
     [HttpPost("update")]
-    public async Task<IRe<LinksResponse.UpdateResponse>> Update(
-        LinksRequest.UpdateRequest data)
+    public async Task<IRe<LinksResponse.UpdateLinkResponse>> Update(
+        LinksRequest.UpdateLinkRequest data)
     {
         return await _linksService.Update(data);
     }
@@ -103,8 +103,8 @@ public class linksController
     /// <returns></returns>
     [Auth]
     [HttpPost("delete")]
-    public async Task<IRe<LinksResponse.DeleteResponse>> Delete(
-        LinksRequest.DeleteRequest data)
+    public async Task<IRe<LinksResponse.DeleteLinkResponse>> Delete(
+        LinksRequest.DeleteLinkRequest data)
     {
         return await _linksService.Delete(data);
     }

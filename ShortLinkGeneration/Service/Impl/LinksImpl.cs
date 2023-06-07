@@ -16,37 +16,35 @@ public class LinksImpl : ILinksService
     private readonly ILogger<LinksImpl> _logger;
     private readonly ShortLinkContext _db;
     private readonly IJwtService _jwtService;
-    private readonly IOptions<ConfigOptions> _config;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     public LinksImpl(ILogger<LinksImpl> logger, ShortLinkContext db, IJwtService jwtService,
-        IOptions<ConfigOptions> config, IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
         _db = db;
         _jwtService = jwtService;
-        _config = config;
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<IRe<LinksResponse.CreateResponse>> Create(LinksRequest.CreateRequest data)
+    public async Task<IRe<LinksResponse.CreateLinkResponse>> Create(LinksRequest.CreateLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
 
         if (data.ShortLink is not null && data.ShortLink.Length != 0 && !JudgeShortConnection(data.ShortLink))
         {
-            return new Ok<LinksResponse.CreateResponse>
+            return new Ok<LinksResponse.CreateLinkResponse>
             {
                 Code = Code.ShortLinkExists,
                 Message = "短连接已存在"
             };
         }
-        
+
         //判断长连接格式
         if (!data.LongLink.IsUrl())
         {
-            return new Error<LinksResponse.CreateResponse>
+            return new Error<LinksResponse.CreateLinkResponse>
             {
                 Code = Code.LongLinkFormatError,
                 Message = "长连接格式错误"
@@ -64,7 +62,7 @@ public class LinksImpl : ILinksService
             catch (Exception e)
             {
                 _logger.LogError(e, "生成短链接失败");
-                return new Error<LinksResponse.CreateResponse>
+                return new Error<LinksResponse.CreateLinkResponse>
                 {
                     Code = Code.ShortLinkGenerationFailed,
                     Message = "短链接生成失败"
@@ -87,11 +85,11 @@ public class LinksImpl : ILinksService
             //保存数据库
             await _db.SaveChangesAsync();
 
-            return new Ok<LinksResponse.CreateResponse>
+            return new Ok<LinksResponse.CreateLinkResponse>
             {
                 Code = Code.Success,
                 Message = "短链接生成成功",
-                Data = new LinksResponse.CreateResponse
+                Data = new LinksResponse.CreateLinkResponse
                 {
                     ShortLink = shortLink
                 }
@@ -106,7 +104,7 @@ public class LinksImpl : ILinksService
 
             if (!isValid)
             {
-                return new Error<LinksResponse.CreateResponse>
+                return new Error<LinksResponse.CreateLinkResponse>
                 {
                     Code = Code.TokenError,
                     Message = "Token错误"
@@ -119,7 +117,7 @@ public class LinksImpl : ILinksService
 
             if (userID is null)
             {
-                return new Error<LinksResponse.CreateResponse>
+                return new Error<LinksResponse.CreateLinkResponse>
                 {
                     Code = Code.UsernameNotExist,
                     Message = "用户不存在"
@@ -133,7 +131,7 @@ public class LinksImpl : ILinksService
             catch (Exception e)
             {
                 _logger.LogError(e, "生成短链接失败");
-                return new Error<LinksResponse.CreateResponse>
+                return new Error<LinksResponse.CreateLinkResponse>
                 {
                     Code = Code.ShortLinkGenerationFailed,
                     Message = "短链接生成失败"
@@ -157,11 +155,11 @@ public class LinksImpl : ILinksService
             //保存数据库
             await _db.SaveChangesAsync();
 
-            return new Ok<LinksResponse.CreateResponse>
+            return new Ok<LinksResponse.CreateLinkResponse>
             {
                 Code = Code.Success,
                 Message = "短链接生成成功",
-                Data = new LinksResponse.CreateResponse
+                Data = new LinksResponse.CreateLinkResponse
                 {
                     ShortLink = shortLink
                 }
@@ -192,7 +190,7 @@ public class LinksImpl : ILinksService
         }
     }
 
-    public async Task<IRe<LinksResponse.GetAllResponse>> GetAll(LinksRequest.GetAllRequest data)
+    public async Task<IRe<LinksResponse.GetAllLinkResponse>> GetAll(LinksRequest.GetAllLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -214,11 +212,11 @@ public class LinksImpl : ILinksService
         var pageCount = _db.Links.Count(x => x.UserID == userID) / data.PageSize + 1;
 
         //返回数据
-        return new Ok<LinksResponse.GetAllResponse>
+        return new Ok<LinksResponse.GetAllLinkResponse>
         {
             Code = Code.Success,
             Message = "获取成功",
-            Data = new LinksResponse.GetAllResponse
+            Data = new LinksResponse.GetAllLinkResponse
             {
                 LinkList = linkList.Select(x => new LinksResponse.LinkItemResponse
                 {
@@ -236,7 +234,7 @@ public class LinksImpl : ILinksService
         };
     }
 
-    public async Task<IRe<LinksResponse.GetResponse>> Get(LinksRequest.GetRequest data)
+    public async Task<IRe<LinksResponse.GetLinkResponse>> Get(LinksRequest.GetLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -253,7 +251,7 @@ public class LinksImpl : ILinksService
         //判断短链接是否存在
         if (link is null)
         {
-            return new Error<LinksResponse.GetResponse>
+            return new Error<LinksResponse.GetLinkResponse>
             {
                 Code = Code.ShortLinkNotExist,
                 Message = "短链接不存在"
@@ -261,11 +259,11 @@ public class LinksImpl : ILinksService
         }
 
         //返回数据
-        return new Ok<LinksResponse.GetResponse>
+        return new Ok<LinksResponse.GetLinkResponse>
         {
             Code = Code.Success,
             Message = "获取成功",
-            Data = new LinksResponse.GetResponse
+            Data = new LinksResponse.GetLinkResponse
             {
                 Link = new LinksResponse.LinkItemResponse
                 {
@@ -282,7 +280,7 @@ public class LinksImpl : ILinksService
         };
     }
 
-    public async Task<IRe<LinksResponse.SearchResponse>> Search(LinksRequest.SearchRequest data)
+    public async Task<IRe<LinksResponse.SearchLinkResponse>> Search(LinksRequest.SearchLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -309,11 +307,11 @@ public class LinksImpl : ILinksService
                                               x.LinkID.ToString().Contains(data.keywords))) / data.PageSize + 1;
 
         //返回数据
-        return new Ok<LinksResponse.SearchResponse>
+        return new Ok<LinksResponse.SearchLinkResponse>
         {
             Code = Code.Success,
             Message = "获取成功",
-            Data = new LinksResponse.SearchResponse
+            Data = new LinksResponse.SearchLinkResponse
             {
                 LinkList = linkList.Select(x => new LinksResponse.LinkItemResponse
                 {
@@ -331,7 +329,7 @@ public class LinksImpl : ILinksService
         };
     }
 
-    public async Task<IRe<LinksResponse.UpdateResponse>> Update(LinksRequest.UpdateRequest data)
+    public async Task<IRe<LinksResponse.UpdateLinkResponse>> Update(LinksRequest.UpdateLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -348,7 +346,7 @@ public class LinksImpl : ILinksService
         //判断短链接是否存在
         if (link is null)
         {
-            return new Error<LinksResponse.UpdateResponse>
+            return new Error<LinksResponse.UpdateLinkResponse>
             {
                 Code = Code.ShortLinkNotExist,
                 Message = "短链接不存在"
@@ -364,11 +362,11 @@ public class LinksImpl : ILinksService
         await _db.SaveChangesAsync();
 
         //返回数据
-        return new Ok<LinksResponse.UpdateResponse>
+        return new Ok<LinksResponse.UpdateLinkResponse>
         {
             Code = Code.Success,
             Message = "更新成功",
-            Data = new LinksResponse.UpdateResponse
+            Data = new LinksResponse.UpdateLinkResponse
             {
                 Link = new LinksResponse.LinkItemResponse
                 {
@@ -385,7 +383,7 @@ public class LinksImpl : ILinksService
         };
     }
 
-    public async Task<IRe<LinksResponse.DeleteResponse>> Delete(LinksRequest.DeleteRequest data)
+    public async Task<IRe<LinksResponse.DeleteLinkResponse>> Delete(LinksRequest.DeleteLinkRequest data)
     {
         //从Headers中获取Token
         string token = _httpContextAccessor.HttpContext!.Request.Headers["Authorization"]!.ToString().Split(' ').Last();
@@ -402,7 +400,7 @@ public class LinksImpl : ILinksService
         //判断短链接是否存在
         if (link is null)
         {
-            return new Error<LinksResponse.DeleteResponse>
+            return new Error<LinksResponse.DeleteLinkResponse>
             {
                 Code = Code.ShortLinkNotExist,
                 Message = "短链接不存在"
@@ -416,7 +414,7 @@ public class LinksImpl : ILinksService
         await _db.SaveChangesAsync();
 
         //返回数据
-        return new Ok<LinksResponse.DeleteResponse>
+        return new Ok<LinksResponse.DeleteLinkResponse>
         {
             Code = Code.Success,
             Message = "删除成功"

@@ -8,7 +8,7 @@ public class LinksResponse
     /// <summary>
     /// 创建链接响应实体
     /// </summary>
-    public class CreateResponse
+    public class CreateLinkResponse
     {
         /// <summary>
         /// 短链接
@@ -30,7 +30,7 @@ public class LinksResponse
     /// <summary>
     /// 获取用户全部短连接列表响应实体
     /// </summary>
-    public class GetAllResponse
+    public class GetAllLinkResponse
     {
         /// <summary>
         /// 连接列表
@@ -46,7 +46,7 @@ public class LinksResponse
     /// <summary>
     /// 获取指定短链接信息响应实体
     /// </summary>
-    public class GetResponse
+    public class GetLinkResponse
     {
         /// <summary>
         /// 链接信息
@@ -57,7 +57,7 @@ public class LinksResponse
     /// <summary>
     /// 搜索链接响应实体
     /// </summary>
-    public class SearchResponse
+    public class SearchLinkResponse
     {
         /// <summary>
         /// 链接信息
@@ -73,7 +73,7 @@ public class LinksResponse
     /// <summary>
     /// 更新链接响应实体
     /// </summary>
-    public class UpdateResponse
+    public class UpdateLinkResponse
     {
         /// <summary>
         /// 链接信息
@@ -84,7 +84,7 @@ public class LinksResponse
     /// <summary>
     /// 删除链接响应实体
     /// </summary>
-    public class DeleteResponse
+    public class DeleteLinkResponse
     {
     }
 

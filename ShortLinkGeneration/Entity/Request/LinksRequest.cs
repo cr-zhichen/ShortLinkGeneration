@@ -8,7 +8,7 @@ public class LinksRequest
     /// <summary>
     /// 创建链接请求实体
     /// </summary>
-    public class CreateRequest
+    public class CreateLinkRequest
     {
         /// <summary>
         /// 长链接
@@ -45,7 +45,7 @@ public class LinksRequest
     /// <summary>
     /// 获取用户全部链接请求实体
     /// </summary>
-    public class GetAllRequest
+    public class GetAllLinkRequest
     {
         /// <summary>
         /// 页数
@@ -61,7 +61,7 @@ public class LinksRequest
     /// <summary>
     /// 获取指定链接请求实体
     /// </summary>
-    public class GetRequest
+    public class GetLinkRequest
     {
         /// <summary>
         /// 链接ID
@@ -72,7 +72,7 @@ public class LinksRequest
     /// <summary>
     /// 搜索链接请求实体
     /// </summary>
-    public class SearchRequest
+    public class SearchLinkRequest
     {
         /// <summary>
         /// 关键词
@@ -93,7 +93,7 @@ public class LinksRequest
     /// <summary>
     /// 删除链接请求实体
     /// </summary>
-    public class DeleteRequest
+    public class DeleteLinkRequest
     {
         /// <summary>
         /// 链接ID
@@ -104,7 +104,7 @@ public class LinksRequest
     /// <summary>
     /// 更新链接请求实体
     /// </summary>
-    public class UpdateRequest
+    public class UpdateLinkRequest
     {
         /// <summary>
         /// 链接ID
