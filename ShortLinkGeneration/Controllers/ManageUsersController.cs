@@ -8,6 +8,9 @@ using ShortLinkGeneration.Service.Service;
 
 namespace ShortLinkGeneration.Controllers;
 
+/// <summary>
+/// 管理员管理用户
+/// </summary>
 [ApiController]
 [Route("/api/admin/user")]
 public class ManageUsersController

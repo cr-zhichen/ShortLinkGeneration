@@ -95,19 +95,22 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 #### 管理员用户管理
 
 - ✅ POST `api/admin/users/get-all`：获取所有用户的信息
-- ✅ POST `api/admin/users/create`：创建一个新的用户，请求体包含新用户的信息
-- ✅ POST `api/admin/users/get`：获取指定用户的信息，请求体包含用户ID
-- ✅ POST `api/admin/users/delete`：删除指定用户，请求体包含用户ID
-- ✅ POST `api/admin/users/reset-password`：重置指定用户的密码，请求体包含用户ID
+- ✅ POST `api/admin/users/create`：创建一个新的用户
+- ✅ POST `api/admin/users/get`：获取指定用户的信息
+- ✅ POST `api/admin/users/delete`：删除指定用户
+- ✅ POST `api/admin/users/reset-password`：重置指定用户的密码
 - ✅ POST `api/admin/users/search`：模糊搜索用户
 
 #### 管理员链接管理
 
-- POST `api/admin/links/get-all`：获取所有链接的信息
-- POST `api/admin/links/get`：获取指定链接的信息，请求体包含链接ID
-- POST `api/admin/links/update`：更新指定链接的信息，请求体包含链接ID和要更新的信息
-- POST `api/admin/links/delete`：删除指定链接，请求体包含链接ID
-- POST `api/admin/links/disabled`：禁用链接
+- 👨‍💻 POST `api/admin/links/get-all`：获取所有链接的信息
+- 👨‍💻 POST `api/admin/links/get`：获取指定链接的信息
+- 👨‍💻 POST `api/admin/links/update`：更新指定链接的信息
+- 👨‍💻 POST `api/admin/links/delete`：删除指定链接
+- 👨‍💻 POST `api/admin/links/disabled`：禁用链接
+- 👨‍💻 POST `api/admin/links/search`：模糊搜索链接
+- 👨‍💻 POST `api/admin/links/get-by-user`：获取指定用户的所有链接
+- 👨‍💻 POST `api/admin/links/get-clicks`：获取指定链接的点击记录
 
 </p>
 </details>

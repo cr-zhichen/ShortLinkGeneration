@@ -41,6 +41,7 @@ builder.Services.AddScoped<IUsersService, UsersImpl>();
 builder.Services.AddScoped<ILinksService, LinksImpl>();
 builder.Services.AddScoped<IRedirectService, RedirectImpl>();
 builder.Services.AddScoped<IManageUsersService, ManageUsersImpl>();
+builder.Services.AddScoped<IManagerLinksServer, ManagerLinksImpl>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<ConfigOptions>(builder.Configuration.GetSection("SMTP"));
@@ -119,7 +120,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 //使用完整的类型名称作为架构 ID
-// builder.Services.AddSwaggerGen(c => { c.CustomSchemaIds(x => x.FullName); });
+builder.Services.AddSwaggerGen(c => { c.CustomSchemaIds(x => x.FullName); });
 
 #endregion
 
