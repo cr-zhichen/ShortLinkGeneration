@@ -65,6 +65,7 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 
 #### 初始化
 
+- ✅ POST `/init/is-init`: 判断是否已经初始化
 - ✅ POST `/init/db`: 初始化数据库
 - ✅ POST `/init/admin`: 初始化管理员用户
 

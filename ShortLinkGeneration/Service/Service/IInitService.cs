@@ -7,5 +7,6 @@ namespace ShortLinkGeneration.Service.Service;
 public interface IInitService
 {
     public Task<IRe<InitResponse.InitDbResponse>> InitDb();
+    public Task<IRe<InitResponse.IsInitResponse>> IsInit();
     public Task<IRe<InitResponse.InitAdminResponse>> InitAdmin(InitRequest.InitAdminRequest data);
 }

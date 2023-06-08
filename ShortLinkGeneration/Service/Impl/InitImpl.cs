@@ -55,6 +55,37 @@ public class InitImpl : IInitService
         }
     }
 
+    public async Task<IRe<InitResponse.IsInitResponse>> IsInit()
+    {
+        //判断是否存在未执行的迁移
+        if ((await _db.Database.GetPendingMigrationsAsync()).Any())
+        {
+            _logger.LogInformation("数据库未初始化");
+            return new Error<InitResponse.IsInitResponse>
+            {
+                Code = Code.Error,
+                Message = "数据库未初始化"
+            };
+        }
+
+        //判断是否不存在管理员账户
+        if (!_db.Users.Any(x => x.Role == Role.Admin))
+        {
+            _logger.LogInformation("管理员账户未初始化");
+            return new Error<InitResponse.IsInitResponse>
+            {
+                Code = Code.Error,
+                Message = "管理员账户未初始化"
+            };
+        }
+
+        //返回初始化完成
+        return new Ok<InitResponse.IsInitResponse>
+        {
+            Message = "数据库已初始化"
+        };
+    }
+
     public async Task<IRe<InitResponse.InitAdminResponse>> InitAdmin(
         InitRequest.InitAdminRequest data)
     {

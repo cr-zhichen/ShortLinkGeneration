@@ -33,6 +33,16 @@ public class InitController : ControllerBase
     }
 
     /// <summary>
+    /// 判断初始化完成
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("is-init")]
+    public async Task<IRe<InitResponse.IsInitResponse>> IsInit()
+    {
+        return await _initService.IsInit();
+    }
+
+    /// <summary>
     /// 设定管理员账户
     /// </summary>
     /// <returns></returns>

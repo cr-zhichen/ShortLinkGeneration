@@ -18,4 +18,12 @@ public class InitResponse
     public class InitAdminResponse
     {
     }
+
+    /// <summary>
+    /// 判断初始化是否完成响应实体
+    /// </summary>
+    public class IsInitResponse
+    {
+        
+    }
 }
