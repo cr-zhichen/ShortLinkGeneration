@@ -39,6 +39,13 @@ public interface IJwtService
     /// <param name="token"></param>
     /// <returns></returns>
     Task LogoutAsync(string token);
+
+    /// <summary>
+    /// 通过用户ID注销令牌
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    Task LogoutByUsernameAsync(string username);
 }
 
 // 实现
@@ -174,6 +181,17 @@ public class JwtService : IJwtService
     public Task LogoutAsync(string token)
     {
         var tokenToRemove = TokenList.TokenLists.Find(x => x.Token == token);
+        if (tokenToRemove != null)
+        {
+            TokenList.TokenLists.Remove(tokenToRemove);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task LogoutByUsernameAsync(string username)
+    {
+        var tokenToRemove = TokenList.TokenLists.Find(x => x.Username == username);
         if (tokenToRemove != null)
         {
             TokenList.TokenLists.Remove(tokenToRemove);

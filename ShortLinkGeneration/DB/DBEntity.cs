@@ -42,7 +42,7 @@ public class Click
     [ForeignKey("Link")]
     public int LinkID { get; set; }
     public DateTime ClickTime { get; set; }
-    public string SourceIP { get; set; }
+    public string? SourceIP { get; set; }
 
     // 导航属性
     public Link Link { get; set; }

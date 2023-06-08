@@ -94,12 +94,12 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 
 #### 管理员用户管理
 
-- 👨‍💻 POST `api/admin/users/get-all`：获取所有用户的信息
-- 👨‍💻 POST `api/admin/users/create`：创建一个新的用户，请求体包含新用户的信息
-- 👨‍💻 POST `api/admin/users/get`：获取指定用户的信息，请求体包含用户ID
-- 👨‍💻 POST `api/admin/users/delete`：删除指定用户，请求体包含用户ID
-- 👨‍💻 POST `api/admin/users/reset-password`：重置指定用户的密码，请求体包含用户ID
-- 👨‍💻 POST `api/admin/users/search`：模糊搜索用户
+- ✅ POST `api/admin/users/get-all`：获取所有用户的信息
+- ✅ POST `api/admin/users/create`：创建一个新的用户，请求体包含新用户的信息
+- ✅ POST `api/admin/users/get`：获取指定用户的信息，请求体包含用户ID
+- ✅ POST `api/admin/users/delete`：删除指定用户，请求体包含用户ID
+- ✅ POST `api/admin/users/reset-password`：重置指定用户的密码，请求体包含用户ID
+- ✅ POST `api/admin/users/search`：模糊搜索用户
 
 #### 管理员链接管理
 

@@ -14,6 +14,11 @@ public class ManageUsersResponse
         /// 用户信息列表
         /// </summary>
         public List<UserItemResponse> UsersList { get; set; }
+        
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount { get; set; }
     }
 
     /// <summary>
@@ -57,6 +62,11 @@ public class ManageUsersResponse
         /// 用户信息列表
         /// </summary>
         public List<UserItemResponse> UsersList { get; set; }
+        
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount { get; set; }
     }
 
     /// <summary>
@@ -73,6 +83,11 @@ public class ManageUsersResponse
         /// 用户邮箱
         /// </summary>
         public string Username { get; set; }
+        
+        /// <summary>
+        /// 用户权限
+        /// </summary>
+        public string Role { get; set; }
 
         /// <summary>
         /// 用户创建时间

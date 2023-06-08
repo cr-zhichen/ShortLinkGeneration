@@ -119,7 +119,7 @@ public class LinksImpl : ILinksService
             {
                 return new Error<LinksResponse.CreateLinkResponse>
                 {
-                    Code = Code.UsernameNotExist,
+                    Code = Code.UserNotExist,
                     Message = "用户不存在"
                 };
             }
@@ -209,7 +209,7 @@ public class LinksImpl : ILinksService
             .Take(data.PageSize)
             .ToList();
 
-        var pageCount = _db.Links.Count(x => x.UserID == userID) / data.PageSize + 1;
+        var pageCount = (int)Math.Ceiling((double)_db.Links.Count(x => x.UserID == userID) / data.PageSize);
 
         //返回数据
         return new Ok<LinksResponse.GetAllLinkResponse>
@@ -301,10 +301,13 @@ public class LinksImpl : ILinksService
             .Take(data.PageSize)
             .ToList();
 
-        var pageCount = _db.Links.Count(x => x.UserID == userID &&
-                                             (x.ShortLink.Contains(data.keywords) ||
-                                              x.OriginalLink.Contains(data.keywords) ||
-                                              x.LinkID.ToString().Contains(data.keywords))) / data.PageSize + 1;
+        var pageCount = (int)Math.Ceiling(
+            (double)_db.Links.Count(x =>
+                x.UserID == userID &&
+                (x.ShortLink.Contains(data.keywords) ||
+                 x.OriginalLink.Contains(data.keywords) ||
+                 x.LinkID.ToString().Contains(data.keywords))) /
+            data.PageSize);
 
         //返回数据
         return new Ok<LinksResponse.SearchLinkResponse>
@@ -406,6 +409,9 @@ public class LinksImpl : ILinksService
                 Message = "短链接不存在"
             };
         }
+
+        //删除短连接点击记录
+        _db.Clicks.RemoveRange(_db.Clicks.Where(x => x.LinkID == link.LinkID));
 
         //删除短链接
         _db.Links.Remove(link);

@@ -81,9 +81,14 @@ public enum Code
     /// 链接不存在
     /// </summary>
     ShortLinkNotExist = 14,
-    
+
     /// <summary>
     /// 长链接格式错误
     /// </summary>
     LongLinkFormatError = 15,
+
+    /// <summary>
+    /// 用户不存在
+    /// </summary>
+    UserNotExist = 16,
 }

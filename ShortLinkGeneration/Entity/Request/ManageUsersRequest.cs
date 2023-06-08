@@ -35,6 +35,11 @@ public class ManageUsersRequest
         /// 用户密码
         /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// 用户权限
+        /// </summary>
+        public string Role { get; set; }
     }
 
     /// <summary>
@@ -45,7 +50,7 @@ public class ManageUsersRequest
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserID { get; set; }
+        public int UserID { get; set; }
     }
 
     /// <summary>
@@ -56,7 +61,7 @@ public class ManageUsersRequest
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserID { get; set; }
+        public int UserID { get; set; }
     }
 
     /// <summary>
@@ -67,7 +72,7 @@ public class ManageUsersRequest
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserID { get; set; }
+        public int UserID { get; set; }
 
         /// <summary>
         /// 用户新密码
