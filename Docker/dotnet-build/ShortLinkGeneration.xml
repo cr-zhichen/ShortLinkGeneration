@@ -1,0 +1,1808 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShortLinkGeneration</name>
+    </assembly>
+    <members>
+        <member name="T:ShortLinkGeneration.Attribute.AuthAttribute">
+            <summary>
+            验证JWT Token
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.InitController">
+            <summary>
+            初始化控制器
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.InitController.InitDb">
+            <summary>
+            初始化数据库连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.InitController.IsInit">
+            <summary>
+            判断初始化完成
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.InitController.InitAdmin(ShortLinkGeneration.Entity.Request.InitRequest.InitAdminRequest)">
+            <summary>
+            设定管理员账户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.linksController">
+            <summary>
+            连接控制器
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Create(ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest)">
+            <summary>
+            生成短链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Detection(ShortLinkGeneration.Entity.Request.LinksRequest.DetectionRequest)">
+            <summary>
+            检测短链接是否可用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.GetAll(ShortLinkGeneration.Entity.Request.LinksRequest.GetAllLinkRequest)">
+            <summary>
+            获取用户全部短链接列表 
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Get(ShortLinkGeneration.Entity.Request.LinksRequest.GetLinkRequest)">
+            <summary>
+            获取指定的短链接的信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Search(ShortLinkGeneration.Entity.Request.LinksRequest.SearchLinkRequest)">
+            <summary>
+            搜索短链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Update(ShortLinkGeneration.Entity.Request.LinksRequest.UpdateLinkRequest)">
+            <summary>
+            更新指定的短链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.linksController.Delete(ShortLinkGeneration.Entity.Request.LinksRequest.DeleteLinkRequest)">
+            <summary>
+            删除指定的短链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.ManagerLinksController">
+            <summary>
+            管理员管理链接
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.GetAll(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetAllLinkRequest)">
+            <summary>
+            获取全部链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.Get(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkRequest)">
+            <summary>
+            获取指定链接信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.Update(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.UpdateLinkRequest)">
+            <summary>
+            更新指定链接信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.Delete(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DeleteLinkRequest)">
+            <summary>
+            删除指定链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.Disabled(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DisabledLinkRequest)">
+            <summary>
+            禁用指定链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.Search(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.SearchLinkRequest)">
+            <summary>
+            模糊搜索链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.GetByUser(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkByUserRequest)">
+            <summary>
+            获取指定用户的所有链接
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManagerLinksController.GetClicks(ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetClicksRequest)">
+            <summary>
+            获取指定链接的点击记录
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.ManageUsersController">
+            <summary>
+            管理员管理用户
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.GetAll(ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetAllUserRequest)">
+            <summary>
+            获取全部用户
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.Create(ShortLinkGeneration.Entity.Request.ManageUsersRequest.CreateUserRequest)">
+            <summary>
+            创建一个新用户
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.Get(ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetUserRequest)">
+            <summary>
+            获取指定用户信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.Delete(ShortLinkGeneration.Entity.Request.ManageUsersRequest.DeleteUserRequest)">
+            <summary>
+            删除指定用户
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.RestPassword(ShortLinkGeneration.Entity.Request.ManageUsersRequest.RestUserPasswordRequest)">
+            <summary>
+            重置指定用户密码
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.ManageUsersController.Search(ShortLinkGeneration.Entity.Request.ManageUsersRequest.SearchUserRequest)">
+            <summary>
+            搜索用户
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.RedirectController">
+            <summary>
+            重定向控制器
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.RedirectController.RedirectGet(System.String)">
+            <summary>
+            链接重定向
+            </summary>
+            <param name="shortLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.RedirectController.RedirectPost(ShortLinkGeneration.Entity.Request.RedirectRequest.RedirectPostRequest)">
+            <summary>
+            连接重定向
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Controllers.UsersController">
+            <summary>
+            初始化控制器
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.Register(ShortLinkGeneration.Entity.Request.UsersRequest.RegisterRequest)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.Login(ShortLinkGeneration.Entity.Request.UsersRequest.LoginRequest)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.SendCode(ShortLinkGeneration.Entity.Request.UsersRequest.SendCodeRequest)">
+            <summary>
+            发送验证码
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.Info(ShortLinkGeneration.Entity.Request.UsersRequest.InfoRequest)">
+            <summary>
+            返回当前登录用户的信息
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.UpdatePassword(ShortLinkGeneration.Entity.Request.UsersRequest.UpdatePasswordRequest)">
+            <summary>
+            更新密码
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Controllers.UsersController.ResetPassword(ShortLinkGeneration.Entity.Request.UsersRequest.ResetPasswordRequest)">
+            <summary>
+            重置密码
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.Error">
+            <summary>
+            未知错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.ConnectionFailedDb">
+            <summary>
+            数据库连接失败
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.AdminAccountAlreadyExists">
+            <summary>
+            管理员账户已存在
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.UsernameOrPasswordFormatError">
+            <summary>
+            用户名或密码格式错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.PasswordError">
+            <summary>
+            密码错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.UsernameNotExist">
+            <summary>
+            账号不存在
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.SendCodeError">
+            <summary>
+            验证码发送错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.EmailFormatError">
+            <summary>
+            邮箱格式错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.UsernameExist">
+            <summary>
+            用户名已存在
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.CodeError">
+            <summary>
+            验证码错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.TokenError">
+            <summary>
+            Token错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.PasswordFormatError">
+            <summary>
+            密码格式错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.ShortLinkExists">
+            <summary>
+            短连接重复
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.ShortLinkGenerationFailed">
+            <summary>
+            短连接生成失败
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.ShortLinkNotExist">
+            <summary>
+            链接不存在
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.LongLinkFormatError">
+            <summary>
+            长链接格式错误
+            </summary>
+        </member>
+        <member name="F:ShortLinkGeneration.Entity.Enum.Code.UserNotExist">
+            <summary>
+            用户不存在
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.IRe`1.Code">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.IRe`1.Message">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.IRe`1.Data">
+            <summary>
+            返回数据
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Ok`1.Code">
+            <summary>
+            状态码，默认为成功
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Error`1.Code">
+            <summary>
+            状态码，默认为未知错误
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.InitRequest">
+            <summary>
+            初始化请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.InitRequest.InitDbRequest">
+            <summary>
+            初始化数据库请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.InitRequest.InitAdminRequest">
+            <summary>
+            初始化管理员请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.InitRequest.InitAdminRequest.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.InitRequest.InitAdminRequest.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest">
+            <summary>
+            链接请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest">
+            <summary>
+            创建链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest.ShortLink">
+            <summary>
+            目标短链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest.ExpiryDate">
+            <summary>
+            连接过期时间，为空则不过期
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.CreateLinkRequest.MaxClicks">
+            <summary>
+            最大点击次数，为空则不限制
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.DetectionRequest">
+            <summary>
+            检查链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.DetectionRequest.ShortLink">
+            <summary>
+            目标短链接
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.GetAllLinkRequest">
+            <summary>
+            获取用户全部链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.GetAllLinkRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.GetAllLinkRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.GetLinkRequest">
+            <summary>
+            获取指定链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.GetLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.SearchLinkRequest">
+            <summary>
+            搜索链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.SearchLinkRequest.keywords">
+            <summary>
+            关键词
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.SearchLinkRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.SearchLinkRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.DeleteLinkRequest">
+            <summary>
+            删除链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.DeleteLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.UpdateLinkRequest">
+            <summary>
+            更新链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.UpdateLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.UpdateLinkRequest.Link">
+            <summary>
+            连接信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.LinksRequest.LinkItemRequest">
+            <summary>
+            链接列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.LinkItemRequest.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.LinkItemRequest.ExpiryDate">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.LinksRequest.LinkItemRequest.MaxClicks">
+            <summary>
+            最大点击量（null为不限制）
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest">
+            <summary>
+            管理员管理链接请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetAllLinkRequest">
+            <summary>
+            获取全部链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetAllLinkRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetAllLinkRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkRequest">
+            <summary>
+            获取指定链接信息请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.UpdateLinkRequest">
+            <summary>
+            更新指定链接信息请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.UpdateLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.UpdateLinkRequest.Link">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DeleteLinkRequest">
+            <summary>
+            删除链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DeleteLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DisabledLinkRequest">
+            <summary>
+            禁用链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DisabledLinkRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.DisabledLinkRequest.IsDisabled">
+            <summary>
+            是否禁用
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.SearchLinkRequest">
+            <summary>
+            模糊搜索链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.SearchLinkRequest.keywords">
+            <summary>
+            搜素关键词
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.SearchLinkRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.SearchLinkRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkByUserRequest">
+            <summary>
+            获取指定用户链接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkByUserRequest.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkByUserRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetLinkByUserRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetClicksRequest">
+            <summary>
+            获取指定链接点击记录请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetClicksRequest.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetClicksRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.GetClicksRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.LinkItemRequest">
+            <summary>
+            链接列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.LinkItemRequest.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.LinkItemRequest.ExpiryDate">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManagerLinksRequest.LinkItemRequest.MaxClicks">
+            <summary>
+            最大点击量（null为不限制）
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest">
+            <summary>
+            管理员管理用户请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetAllUserRequest">
+            <summary>
+            获取全部用户请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetAllUserRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetAllUserRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.CreateUserRequest">
+            <summary>
+            创建新用户请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.CreateUserRequest.Username">
+            <summary>
+            用户邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.CreateUserRequest.Password">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.CreateUserRequest.Role">
+            <summary>
+            用户权限
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetUserRequest">
+            <summary>
+            获取指定用户信息请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.GetUserRequest.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.DeleteUserRequest">
+            <summary>
+            删除指定用户请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.DeleteUserRequest.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.RestUserPasswordRequest">
+            <summary>
+            重置密码请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.RestUserPasswordRequest.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.RestUserPasswordRequest.NewPassword">
+            <summary>
+            用户新密码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.ManageUsersRequest.SearchUserRequest">
+            <summary>
+            搜索用户请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.SearchUserRequest.Keyword">
+            <summary>
+            搜索关键字
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.SearchUserRequest.Page">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.ManageUsersRequest.SearchUserRequest.PageSize">
+            <summary>
+            每页数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.RedirectRequest">
+            <summary>
+            连接请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.RedirectRequest.RedirectPostRequest.ShortLink">
+            <summary>
+            短连接
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest">
+            <summary>
+            用户请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.RegisterRequest">
+            <summary>
+            注册请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.RegisterRequest.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.RegisterRequest.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.RegisterRequest.Code">
+            <summary>
+            验证码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.LoginRequest">
+            <summary>
+            登录请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.LoginRequest.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.LoginRequest.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.SendCodeRequest">
+            <summary>
+            发送验证码请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.SendCodeRequest.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.InfoRequest">
+            <summary>
+            返回当前登录用户的信息请求实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.UpdatePasswordRequest">
+            <summary>
+            更新密码请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.UpdatePasswordRequest.OldPassword">
+            <summary>
+            旧密码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.UpdatePasswordRequest.NewPassword">
+            <summary>
+            新密码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Request.UsersRequest.ResetPasswordRequest">
+            <summary>
+            重置密码请求实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.ResetPasswordRequest.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.ResetPasswordRequest.NewPassword">
+            <summary>
+            新密码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Request.UsersRequest.ResetPasswordRequest.Code">
+            <summary>
+            验证码
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.InitResponse">
+            <summary>
+            初始化响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.InitResponse.InitDbResponse">
+            <summary>
+            初始化数据库响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.InitResponse.InitAdminResponse">
+            <summary>
+            初始化管理员响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.InitResponse.IsInitResponse">
+            <summary>
+            判断初始化是否完成响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse">
+            <summary>
+            链接响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.CreateLinkResponse">
+            <summary>
+            创建链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.CreateLinkResponse.ShortLink">
+            <summary>
+            短链接
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.DetectionResponse">
+            <summary>
+            检查链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.DetectionResponse.IsAvailable">
+            <summary>
+            链接是否可用
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.GetAllLinkResponse">
+            <summary>
+            获取用户全部短连接列表响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.GetAllLinkResponse.LinkList">
+            <summary>
+            连接列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.GetAllLinkResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.GetLinkResponse">
+            <summary>
+            获取指定短链接信息响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.GetLinkResponse.Link">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.SearchLinkResponse">
+            <summary>
+            搜索链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.SearchLinkResponse.LinkList">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.SearchLinkResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.UpdateLinkResponse">
+            <summary>
+            更新链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.UpdateLinkResponse.Link">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.DeleteLinkResponse">
+            <summary>
+            删除链接响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse">
+            <summary>
+            链接列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.ShortLink">
+            <summary>
+            短链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.CreationDate">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.ClickCount">
+            <summary>
+            点击次数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.ExpiryDate">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.MaxClicks">
+            <summary>
+            最大点击量（null为不限制）
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.LinksResponse.LinkItemResponse.IsDisabled">
+            <summary>
+            是否被禁用
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse">
+            <summary>
+            管理员管理链接响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetAllLinkResponse">
+            <summary>
+            获取全部链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetAllLinkResponse.LinkList">
+            <summary>
+            连接列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetAllLinkResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetLinkResponse">
+            <summary>
+            获取指定链接信息响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetLinkResponse.Link">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.UpdateLinkResponse">
+            <summary>
+            更新指定链接信息响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.DeleteLinkResponse">
+            <summary>
+            删除链接响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.DisabledLinkResponse">
+            <summary>
+            禁用链接响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.SearchLinkResponse">
+            <summary>
+            模糊搜索链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.SearchLinkResponse.LinkList">
+            <summary>
+            连接列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.SearchLinkResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetLinkByUserResponse">
+            <summary>
+            获取用户全部链接响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetLinkByUserResponse.LinkList">
+            <summary>
+            连接列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetLinkByUserResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetClicksResponse">
+            <summary>
+            获取用户指定链接点击记录响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetClicksResponse.ClicksList">
+            <summary>
+            点击记录列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.GetClicksResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse">
+            <summary>
+            链接列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.LinkID">
+            <summary>
+            链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.ShortLink">
+            <summary>
+            短链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.CreationDate">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.ClickCount">
+            <summary>
+            点击次数
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.ExpiryDate">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.MaxClicks">
+            <summary>
+            最大点击量（null为不限制）
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.LinkItemResponse.IsDisabled">
+            <summary>
+            是否被禁用
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.ClicksItemResponse">
+            <summary>
+            点击记录列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.ClicksItemResponse.ClickID">
+            <summary>
+            点击记录ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.ClicksItemResponse.LinkID">
+            <summary>
+            所属链接ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.ClicksItemResponse.ClickTime">
+            <summary>
+            点击时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManagerLinksResponse.ClicksItemResponse.SourceIP">
+            <summary>
+            点击IP
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse">
+            <summary>
+            管理员管理用户响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.GetAllUserResponse">
+            <summary>
+            获取全部用户响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.GetAllUserResponse.UsersList">
+            <summary>
+            用户信息列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.GetAllUserResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.CreateUserResponse">
+            <summary>
+            创建新用户响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.GetUserResponse">
+            <summary>
+            获取指定用户信息响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.GetUserResponse.User">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.DeleteUserResponse">
+            <summary>
+            删除指定用户响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.RestUserPasswordResponse">
+            <summary>
+            重置密码响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.SearchUserResponse">
+            <summary>
+            搜索用户响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.SearchUserResponse.UsersList">
+            <summary>
+            用户信息列表
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.SearchUserResponse.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse">
+            <summary>
+            用户信息列表项
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse.Username">
+            <summary>
+            用户邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse.Role">
+            <summary>
+            用户权限
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse.CreationTime">
+            <summary>
+            用户创建时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.ManageUsersResponse.UserItemResponse.LinkCount">
+            <summary>
+            创造连接数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.RedirectResponse">
+            <summary>
+            重定向响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.RedirectResponse.RedirectPostResponse">
+            <summary>
+            重定向响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.RedirectResponse.RedirectPostResponse.LongLink">
+            <summary>
+            长链接
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse">
+            <summary>
+            用户响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.RegisterResponse">
+            <summary>
+            注册响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.RegisterResponse.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.RegisterResponse.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.RegisterResponse.Token">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.LoginResponse">
+            <summary>
+            登录响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.LoginResponse.Username">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.LoginResponse.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.LoginResponse.Token">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.SendCodeResponse">
+            <summary>
+            发送验证码响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.InfoResponse">
+            <summary>
+            返回当前登录用户的信息响应实体
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.InfoResponse.Username">
+            <summary>
+            用户邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.InfoResponse.Role">
+            <summary>
+            用户权限
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.InfoResponse.CreationTime">
+            <summary>
+            用户创建时间
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Entity.Response.UsersResponse.InfoResponse.LinkCount">
+            <summary>
+            用户创建的短链接数量
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.UpdatePasswordResponse">
+            <summary>
+            更新密码响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Entity.Response.UsersResponse.ResetPasswordResponse">
+            <summary>
+            重置密码响应实体
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Filter.CustomerExceptionFilter">
+            <summary>
+            自定义异常过滤器
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Filter.CustomerExceptionFilter.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            重写OnExceptionAsync方法，定义自己的处理逻辑
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Migrations.Initial">
+            <inheritdoc />
+        </member>
+        <member name="M:ShortLinkGeneration.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShortLinkGeneration.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShortLinkGeneration.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ShortLinkGeneration.Service.Impl.LinksImpl.CreateShortLink(System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.Int32})">
+            <summary>
+            游客生成短连接
+            </summary>
+            <param name="shortLink"></param>
+            <param name="longLink"></param>
+            <param name="expiryDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.Impl.LinksImpl.RandomlyGenerateShortLinks">
+            <summary>
+            随机生成短连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.Impl.LinksImpl.JudgeShortConnection(System.String)">
+            <summary>
+            判断短连接是否可用
+            </summary>
+            <param name="shortLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.Impl.LinksImpl.DetermineTheShortConnectionFormat(System.String)">
+            <summary>
+            判断短连接格式是否正确
+            </summary>
+            <param name="shortLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.IJwtService.CreateTokenAsync(System.String,System.String)">
+            <summary>
+            创建令牌
+            </summary>
+            <param name="username"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.IJwtService.ValidateTokenAsync(System.String,System.String)">
+            <summary>
+            验证令牌身份
+            </summary>
+            <param name="token"></param>
+            <param name="requiredRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.IJwtService.GetUsernameAsync(System.String)">
+            <summary>
+            获取令牌中的用户名
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.IJwtService.LogoutAsync(System.String)">
+            <summary>
+            注销令牌
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.IJwtService.LogoutByUsernameAsync(System.String)">
+            <summary>
+            通过用户ID注销令牌
+            </summary>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.JwtService.CreateTokenAsync(System.String,System.String)">
+            <summary>
+            创建令牌
+            </summary>
+            <param name="username"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.JwtService.ValidateTokenAsync(System.String,System.String)">
+            <summary>
+            验证令牌身份
+            </summary>
+            <param name="token"></param>
+            <param name="requiredRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.JwtService.GetUsernameAsync(System.String)">
+            <summary>
+            从令牌中获取用户名
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Service.JwtService.LogoutAsync(System.String)">
+            <summary>
+            注销令牌
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShortLinkGeneration.Static.TokenList.TokenItem">
+            <summary>
+            Token暂存
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Static.VerificationCode">
+            <summary>
+            验证码保存类
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Static.VerificationCode.VerificationCodeItem">
+            <summary>
+            验证码暂存
+            </summary>
+        </member>
+        <member name="T:ShortLinkGeneration.Tool.Argon2Hasher">
+            <summary>
+            Argon2加密
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Argon2Hasher.HashPassword(System.String,System.String)">
+            <summary>
+            给密码加密
+            </summary>
+            <param name="password"></param>
+            <param name="salt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Argon2Hasher.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            验证密码
+            </summary>
+            <param name="password"></param>
+            <param name="storedHash"></param>
+            <param name="salt"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.ConfigOptions.SmtpService">
+            <summary>
+            SMTP服务器
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.ConfigOptions.Port">
+            <summary>
+            SMTP端口
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.ConfigOptions.SendEmail">
+            <summary>
+            发件人地址
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.ConfigOptions.SendPwd">
+            <summary>
+            发件人密码
+            </summary>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.Do``1(``0,System.Action{``0})">
+            <summary>
+            链式调用
+            </summary>
+            <param name="t">自身传递</param>
+            <param name="action">委托调用</param>
+            <typeparam name="T">自身类</typeparam>
+            <returns>自身传出</returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToMd5(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            计算md5值
+            </summary>
+            <param name="str">自身传递</param>
+            <param name="toUpper">是否为大写</param>
+            <param name="to16">是否为16位md5</param>
+            <returns>md5</returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToMd5(System.Byte[],System.Boolean,System.Boolean)">
+            <summary>
+            计算md5值
+            </summary>
+            <param name="bytes">自身传递</param>
+            <param name="toUpper">是否为大写</param>
+            <param name="to16">是否为16位md5</param>
+            <returns>md5</returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToInt(System.String)">
+            <summary>
+            string转int
+            </summary>
+            <param name="str">自身传递</param>
+            <returns>int值</returns>
+            <exception cref="T:System.Exception">转换失败</exception>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToFloat(System.String)">
+            <summary>
+            string转float
+            </summary>
+            <param name="str">自身传递</param>
+            <returns>float值</returns>
+            <exception cref="T:System.Exception">转换失败</exception>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToDouble(System.String)">
+            <summary>
+            string转double
+            </summary>
+            <param name="str">自身传递</param>
+            <returns>double值</returns>
+            <exception cref="T:System.Exception">转换失败</exception>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsEmail(System.String)">
+            <summary>
+            判断是否是Email格式
+            </summary>
+            <param name="str">自身传递</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsPassword(System.String)">
+            <summary>
+            判断是否是密码格式
+            长度在6至16个字符之间
+            至少包含以下任意两类字符：数字、字母、非字母数字字符。
+            </summary>
+            <param name="str">自身传递</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsMobile(System.String)">
+            <summary>
+            判断是否是手机号格式
+            </summary>
+            <param name="str">自身传递</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsIdCard(System.String)">
+            <summary>
+            判断是否是身份证号格式
+            </summary>
+            <param name="str">自身传递</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsUrl(System.String)">
+            <summary>
+            判断是否是Url格式
+            </summary>
+            <param name="str">自身传递</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsIpv4(System.String)">
+            <summary>
+            判断是否是ipv4格式
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsIpv6(System.String)">
+            <summary>
+            判断是否是ipv6格式
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsIp(System.String)">
+            <summary>
+            判断是否是ip格式
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsChinese(System.String)">
+            <summary>
+            判断是否包含中文
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsChineseName(System.String)">
+            <summary>
+            判断是否是中文姓名格式
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsEnglish(System.String)">
+            <summary>
+            判断是否是英文
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsUpperEnglish(System.String)">
+            <summary>
+            判断是否是大写英文
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.IsLowerEnglish(System.String)">
+            <summary>
+            判断是否是小写英文
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.MaskIdCard(System.String)">
+            <summary>
+            身份证号码脱敏
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.MaskMobile(System.String)">
+            <summary>
+            手机号码脱敏
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.MaskEmail(System.String)">
+            <summary>
+            邮箱脱敏
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.GetTotalMilliseconds(System.DateTime)">
+            <summary>
+            获取毫秒级时间戳
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.GetTotalSeconds(System.DateTime)">
+            <summary>
+            获取秒级时间戳
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToDateTimeMilliseconds(System.Double)">
+            <summary>
+            毫秒级时间戳转换为DateTime
+            </summary>
+            <param name="timestamp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.ToDateTimeSeconds(System.Double)">
+            <summary>
+            秒级时间戳转换为DateTime
+            </summary>
+            <param name="timestamp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShortLinkGeneration.Tool.Expand.GetTimeDifference(System.DateTime,System.DateTime)">
+            <summary>
+            获取时间差
+            </summary>
+            <param name="dt"></param>
+            <param name="dt2">传入时间</param>
+            <returns>返回时间差 小于0为在之前，大于0为在之后 </returns>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.JWT.TokenOptions.SecretKey">
+            <summary>
+            秘钥
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.JWT.TokenOptions.Issuer">
+            <summary>
+            签发者
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.JWT.TokenOptions.Audience">
+            <summary>
+            接收者
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.JWT.TokenOptions.ExpireMinutes">
+            <summary>
+            过期时间（分钟）
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.smtpService">
+            <summary>
+            SMTP服务器
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.sendEmail">
+            <summary>
+            发件人邮箱
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.sendPwd">
+            <summary>
+            SMTP密码
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.port">
+            <summary>
+            SMTP端口
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.reAddress">
+            <summary>
+            接收邮件的地址
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.subject">
+            <summary>
+            邮件主题
+            </summary>
+        </member>
+        <member name="P:ShortLinkGeneration.Tool.MailConfiguration.body">
+            <summary>
+            邮件内容
+            </summary>
+        </member>
+    </members>
+</doc>
