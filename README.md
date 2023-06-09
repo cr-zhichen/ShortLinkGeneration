@@ -10,12 +10,28 @@
 
 ## 项目部署
 
-// TODO
+### Docker部署
+
+使用Docker部署前，请确保正确安装并启动Docker
+
+#### Docker构建(最快)
+
+直接执行：
+
+``` shall
+curl -LJO https://github.com/cr-zhichen/ShortLinkGeneration/raw/main/Docker.tar.gz && tar -xzf Docker.tar.gz && cd Docker && chmod +x start.sh && ./start.sh
+```
+
+#### Docker源码构建(兼容性强)
+
+克隆存储库，运行`start.sh`脚本，根据脚本提示输入配置，即可完成构建。
 
 ## 项目开发
 
-<details><summary>点击展开</summary></summary>
+<details><summary>后端</summary></summary>
 <p>
+
+克隆存储库，并在根目录下运行
 
 ### 安装SDK
 
@@ -50,13 +66,16 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 </p>
 </details>
 
-## 前端
+
+<details><summary>前端</summary></summary>
+<p>
 
 // TODO
 
-## 后端
+</p>
+</details>
 
-### 接口设计
+## 接口设计
 
 <details><summary>点击展开</summary></summary>
 <p>
@@ -116,7 +135,7 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 </p>
 </details>
 
-### 数据库设计
+## 数据库设计
 
 <details><summary>点击展开</summary></summary>
 <p>
