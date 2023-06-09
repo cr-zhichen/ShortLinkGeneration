@@ -28,9 +28,6 @@ public class AuthAttribute : ActionFilterAttribute
 
         var isValid = await jwtService.ValidateTokenAsync(token, _requiredRole);
 
-        //判断令牌是否在缓存中
-        isValid = isValid && TokenList.TokenLists.Any(x => x.Token == token);
-
         if (!isValid)
         {
             var errorObject = new Error<object>

@@ -104,6 +104,15 @@ public class JwtService : IJwtService
     /// <returns></returns>
     public Task<bool> ValidateTokenAsync(string token, string requiredRole = "")
     {
+        
+        //判断令牌是否在缓存中
+        var isValid = TokenList.TokenLists.Any(x => x.Token == token);
+        
+        if (!isValid)
+        {
+            return Task.FromResult(false);
+        }
+        
         var tokenHandler = new JwtSecurityTokenHandler();
         var validationParameters = new TokenValidationParameters
         {

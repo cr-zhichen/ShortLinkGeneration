@@ -98,9 +98,7 @@ public class LinksImpl : ILinksService
         else
         {
             //Token存在，判断Token是否有效
-            var isValid = _jwtService.ValidateTokenAsync(token, "Admin").Result;
-            //判断令牌是否在缓存中
-            isValid = isValid && TokenList.TokenLists.Any(x => x.Token == token);
+            var isValid = _jwtService.ValidateTokenAsync(token).Result;
 
             if (!isValid)
             {

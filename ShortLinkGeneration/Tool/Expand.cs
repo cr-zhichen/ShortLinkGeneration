@@ -120,15 +120,14 @@ public static class Expand
     /// <summary>
     /// 判断是否是密码格式
     /// 长度在6至16个字符之间
-    /// 不能全为数字
-    /// 不能全为字母
+    /// 至少包含以下任意两类字符：数字、字母、非字母数字字符。
     /// </summary>
     /// <param name="str">自身传递</param>
     /// <returns></returns>
     public static bool IsPassword(this string str)
     {
         return Regex.IsMatch(str,
-            @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$");
+            @"^((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\W_])[0-9a-zA-Z\W_]{6,16}$)|((?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{6,16}$)|((?=.*[0-9])(?=.*[\W_])[0-9\W_]{6,16}$)|((?=.*[a-zA-Z])(?=.*[\W_])[a-zA-Z\W_]{6,16}$)");
     }
 
     /// <summary>

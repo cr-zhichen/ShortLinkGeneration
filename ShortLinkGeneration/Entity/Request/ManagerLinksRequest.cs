@@ -38,6 +38,11 @@ public class ManagerLinksRequest
     public class UpdateLinkRequest
     {
         /// <summary>
+        /// 链接ID
+        /// </summary>
+        public int LinkID { get; set; }
+
+        /// <summary>
         /// 链接信息
         /// </summary>
         public LinkItemRequest Link { get; set; }
@@ -63,6 +68,11 @@ public class ManagerLinksRequest
         /// 链接ID
         /// </summary>
         public int LinkID { get; set; }
+        
+        /// <summary>
+        /// 是否禁用
+        /// </summary>
+        public bool IsDisabled { get; set; }
     }
 
     /// <summary>

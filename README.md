@@ -104,14 +104,14 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 
 #### 管理员链接管理
 
-- 👨‍💻 POST `api/admin/links/get-all`：获取所有链接的信息
-- 👨‍💻 POST `api/admin/links/get`：获取指定链接的信息
-- 👨‍💻 POST `api/admin/links/update`：更新指定链接的信息
-- 👨‍💻 POST `api/admin/links/delete`：删除指定链接
-- 👨‍💻 POST `api/admin/links/disabled`：禁用链接
-- 👨‍💻 POST `api/admin/links/search`：模糊搜索链接
-- 👨‍💻 POST `api/admin/links/get-by-user`：获取指定用户的所有链接
-- 👨‍💻 POST `api/admin/links/get-clicks`：获取指定链接的点击记录
+- ✅ POST `api/admin/links/get-all`：获取所有链接的信息
+- ✅ POST `api/admin/links/get`：获取指定链接的信息
+- ✅ POST `api/admin/links/update`：更新指定链接的信息
+- ✅ POST `api/admin/links/delete`：删除指定链接
+- ✅ POST `api/admin/links/disabled`：禁用链接
+- ✅ POST `api/admin/links/search`：模糊搜索链接
+- ✅ POST `api/admin/links/get-by-user`：获取指定用户的所有链接
+- ✅ POST `api/admin/links/get-clicks`：获取指定链接的点击记录
 
 </p>
 </details>
