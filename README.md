@@ -110,7 +110,7 @@ dotnet run --project ShortLinkGeneration/ShortLinkGeneration.csproj --framework 
 #### 链接重定向
 
 - ✅ POST `api/to/redirect`：重定向到指定的短链接的原始链接。
-- ✅ GET `/{shortLink}`：重定向到指定的短链接的原始链接。
+- ✅ GET `s/{shortLink}`：重定向到指定的短链接的原始链接。
 
 #### 管理员用户管理
 

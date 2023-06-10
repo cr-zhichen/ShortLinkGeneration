@@ -26,7 +26,7 @@ public class RedirectController
     /// </summary>
     /// <param name="shortLink"></param>
     /// <returns></returns>
-    [HttpGet("{shortLink}")]
+    [HttpGet("s/{shortLink}")]
     public async Task<IActionResult> RedirectGet(string shortLink)
     {
         return await _redirectService.Redirect(shortLink);
