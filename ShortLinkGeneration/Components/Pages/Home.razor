@@ -1,0 +1,114 @@
+﻿@page "/"
+@using System.Text.RegularExpressions
+@using ShortLinkGeneration.Repositories.ShortLinkGeneration
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IJSRuntime JsRuntime
+@inject IShortLinkGenerationRepository ShortLinkGenerationRepository
+
+<MudSnackbarProvider/>
+
+<PageTitle>首页</PageTitle>
+
+<MudPaper Class="pa-16 ma-2">
+    <MudText Typo="Typo.h4" Class="mb-2">短连接生成器</MudText>
+
+    <MudTextField
+        @bind-Value="_longLinks"
+        Label="需要缩短的链接"
+        HelperText="请输入完整的URL，如：https://www.baidu.com"
+        HelperTextOnFocus="true"
+        Variant="Variant.Text"
+        Class="">
+    </MudTextField>
+
+    <MudTextField
+        @bind-Value="_customSuffix"
+        Label="自定义短链接后缀"
+        HelperText="留空则随机生成"
+        HelperTextOnFocus="true"
+        Variant="Variant.Text"
+        Class="">
+    </MudTextField>
+
+    <MudButton
+        Variant="Variant.Filled"
+        Color="Color.Primary"
+        OnClick="GenerateShortLinks"
+        Class="mb-4">
+        生成
+    </MudButton>
+    @if (_shortLinks.Length > 0)
+    {
+        <br/>
+        <MudButton
+            Variant="Variant.Text"
+            OnClick="@CopyLink"
+            Color="Color.Primary">
+            @_shortLinks
+        </MudButton>
+    }
+</MudPaper>
+
+
+@code
+{
+    private string _longLinks = "";
+    private string _shortLinks = "";
+    private string _baseUrl = "";
+    private string _customSuffix = "";
+
+    override protected void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        _baseUrl = $"{uri.Scheme}://{uri.Authority}/";
+    }
+
+    private async Task GenerateShortLinks()
+    {
+        // 判断_longLinks是否为URL
+        if (!Uri.TryCreate(_longLinks, UriKind.Absolute, out _))
+        {
+            Snackbar.Add("请输入正确的URL", Severity.Error);
+            return;
+        }
+
+        if (_customSuffix.Length > 0)
+        {
+            if (_customSuffix.Length > 10)
+            {
+                Snackbar.Add("自定义后缀长度不能超过10个字符", Severity.Error);
+                return;
+            }
+
+            if (!Regex.IsMatch(_customSuffix, @"^[a-zA-Z0-9]+$"))
+            {
+                Snackbar.Add("自定义后缀只能包含字母和数字", Severity.Error);
+                return;
+            }
+        }
+        else
+        {
+            _customSuffix = Guid.NewGuid().ToString().Substring(0, 5);
+        }
+
+        _shortLinks = $"{_baseUrl}{_customSuffix}";
+
+        try
+        {
+            await ShortLinkGenerationRepository.AddShortLinkGenerationAsync(_longLinks, _customSuffix);
+            Snackbar.Add("生成成功", Severity.Success);
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add($"{e.Message}", Severity.Error);
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task CopyLink()
+    {
+        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", _shortLinks);
+        Snackbar.Add("已复制到剪贴板", Severity.Success);
+    }
+}

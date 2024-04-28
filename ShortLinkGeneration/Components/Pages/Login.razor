@@ -1,0 +1,96 @@
+﻿@page "/login"
+@using System.Text.RegularExpressions
+@inject IJwtService JwtService
+@inject ILocalStorageService LocalStorage
+@inject IUserRepository UserRepository
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+
+<MudSnackbarProvider/>
+<PageTitle>登录</PageTitle>
+
+<MudPaper Class="pa-16 ma-2">
+    <MudText Typo="Typo.h4" Class="mb-2">登录</MudText>
+
+    <MudTextField
+        Label="用户名"
+        @bind-Value="@_username"
+        Variant="Variant.Text"
+        FullWidth="true"
+        Class="mb-4"/>
+
+    <MudTextField
+        Label="密码"
+        @bind-Value="@_password"
+        Variant="Variant.Text"
+        FullWidth="true"
+        Class="mb-4"
+        InputType="InputType.Password"/>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnLogin">@_btnText</MudButton>
+
+    @_token
+</MudPaper>
+
+
+@code {
+    private string _username = "";
+    private string _password = "";
+    private string _btnText = "登录";
+
+    private string _token = "";
+
+    override protected async Task OnInitializedAsync()
+    {
+        if (await UserRepository.IsEmptyAsync())
+        {
+            _btnText = "创建用户";
+        }
+    }
+
+    private async Task OnLogin()
+    {
+        // 如果数据库为空，则创建一个默认用户
+        if (await UserRepository.IsEmptyAsync())
+        {
+            // 使用正则判断用户名是否大于5位小于20位，不包含特殊字符
+            if (!Regex.IsMatch(_username, "^[a-zA-Z0-9]{5,20}$"))
+            {
+                Snackbar.Add("用户名必须为5-20位字母或数字", Severity.Error);
+                return;
+            }
+
+            // 使用正则判断密码是否大于8位小于20位，特殊字符只允许_-.@!#$%^&*()[]{}|\/:;?<>`~
+            if (!Regex.IsMatch(_password, "^[a-zA-Z0-9_\\-.@!#$%^&*()\\[\\]{}|\\\\/:;?<>`~]{8,20}$"))
+            {
+                Snackbar.Add("密码必须为8-20位字母、数字或特殊字符", Severity.Error);
+                return;
+            }
+
+            await UserRepository.CreateUserAsync(_username, _password.ToArgon2(), UserRole.Admin);
+        }
+        else
+        {
+            if (!await UserRepository.CheckPasswordAsync(_username, _password.ToArgon2()))
+            {
+                Snackbar.Add("用户名或密码错误", Severity.Error);
+                return;
+            }
+        }
+
+        _token = await JwtService.CreateTokenAsync(new UserInfoTokenData()
+        {
+            Username = _username,
+            Role = UserRole.Admin.ToString()
+        });
+
+        // 将 token 存储到本地
+        await LocalStorage.SetItemAsync("token", _token);
+
+        Snackbar.Add("登录成功", Severity.Success);
+
+        // 跳转到首页
+        NavigationManager.NavigateTo("/");
+    }
+
+}
