@@ -43,6 +43,7 @@ public class AuthUtils(
 
         if (string.IsNullOrEmpty(token))
         {
+            userSessionService.PreviousRouteBeforeLogin = new Uri(navigationManager.Uri).AbsolutePath;
             navigationManager.NavigateTo("/login");
             return false;
         }
@@ -68,6 +69,7 @@ public class AuthUtils(
 
         if (!isValid)
         {
+            userSessionService.PreviousRouteBeforeLogin = new Uri(navigationManager.Uri).AbsolutePath;
             navigationManager.NavigateTo("/login");
             userSessionService.Token = null;
             await localStorage.RemoveItemAsync("token");

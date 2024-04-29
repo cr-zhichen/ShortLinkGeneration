@@ -1,10 +1,12 @@
 ﻿@page "/login"
 @using System.Text.RegularExpressions
+@using ShortLinkGeneration.Components.Models
 @inject IJwtService JwtService
 @inject ILocalStorageService LocalStorage
 @inject IUserRepository UserRepository
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
+@inject IUserSessionService UserSessionService
 
 <MudSnackbarProvider/>
 <PageTitle>登录</PageTitle>
@@ -28,8 +30,6 @@
         InputType="InputType.Password"/>
 
     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnLogin">@_btnText</MudButton>
-
-    @_token
 </MudPaper>
 
 
@@ -39,6 +39,17 @@
     private string _btnText = "登录";
 
     private string _token = "";
+
+    override protected async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Snackbar.Configuration.PreventDuplicates = false;
+        UserSessionService.Token = await LocalStorage.GetItemAsync<string>("token");
+        if (UserSessionService.Token != null)
+        {
+            Snackbar.Add("您已登录", Severity.Info, SnackbarConfig.DefaultOptions);
+            NavigationManager.NavigateTo("/");
+        }
+    }
 
     override protected async Task OnInitializedAsync()
     {
@@ -56,14 +67,14 @@
             // 使用正则判断用户名是否大于5位小于20位，不包含特殊字符
             if (!Regex.IsMatch(_username, "^[a-zA-Z0-9]{5,20}$"))
             {
-                Snackbar.Add("用户名必须为5-20位字母或数字", Severity.Error);
+                Snackbar.Add("用户名必须为5-20位字母或数字", Severity.Error, SnackbarConfig.DefaultOptions);
                 return;
             }
 
             // 使用正则判断密码是否大于8位小于20位，特殊字符只允许_-.@!#$%^&*()[]{}|\/:;?<>`~
             if (!Regex.IsMatch(_password, "^[a-zA-Z0-9_\\-.@!#$%^&*()\\[\\]{}|\\\\/:;?<>`~]{8,20}$"))
             {
-                Snackbar.Add("密码必须为8-20位字母、数字或特殊字符", Severity.Error);
+                Snackbar.Add("密码必须为8-20位字母、数字或特殊字符", Severity.Error, SnackbarConfig.DefaultOptions);
                 return;
             }
 
@@ -73,7 +84,7 @@
         {
             if (!await UserRepository.CheckPasswordAsync(_username, _password.ToArgon2()))
             {
-                Snackbar.Add("用户名或密码错误", Severity.Error);
+                Snackbar.Add("用户名或密码错误", Severity.Error, SnackbarConfig.DefaultOptions);
                 return;
             }
         }
@@ -87,10 +98,16 @@
         // 将 token 存储到本地
         await LocalStorage.SetItemAsync("token", _token);
 
-        Snackbar.Add("登录成功", Severity.Success);
+        // 设置用户会话
+        UserSessionService.Token = _token;
 
-        // 跳转到首页
-        NavigationManager.NavigateTo("/");
+        Snackbar.Add("登录成功", Severity.Success, SnackbarConfig.DefaultOptions);
+
+        NavigationManager.NavigateTo(
+            UserSessionService.PreviousRouteBeforeLogin != new Uri(NavigationManager.Uri).AbsolutePath
+                ? UserSessionService.PreviousRouteBeforeLogin
+                : "/"
+            );
     }
 
 }

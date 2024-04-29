@@ -1,0 +1,132 @@
+﻿@page "/Manage"
+@using ShortLinkGeneration.Components.Models
+@using ShortLinkGeneration.Jwt
+@using ShortLinkGeneration.Repositories.Settings
+@using ShortLinkGeneration.Repositories.ShortLinkGeneration
+@inject AuthUtils AuthUtils
+@inject ISettingsRepository SettingsRepository
+@inject ISnackbar Snackbar
+@inject IShortLinkGenerationRepository ShortLinkGenerationRepository
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<MudSnackbarProvider/>
+<PageTitle>后台管理</PageTitle>
+
+<MudPaper Class="pa-16 ma-2">
+    <MudText Typo="Typo.h4" Class="mb-2">后台管理</MudText>
+
+    <MudSwitch
+        @bind-Value="@NotLoggedInToCreate"
+        Color="Color.Primary"
+        Label="是否允许未登录用户创建短链接"
+        Class="mb-2"/>
+
+    @if (ShortLinkGenerationTables == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
+    }
+    else
+    {
+        <MudSimpleTable Style="overflow-x: auto;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>长链接</th>
+                <th>短链接后缀</th>
+                <th>创建时间</th>
+                <th>点击次数</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var row in ShortLinkGenerationTables!)
+            {
+                <tr>
+                    <td>@row.ShortId</td>
+                    <td>@row.LongUrl</td>
+                    <td>@row.ShortUrlSuffix</td>
+                    <td>@row.CreateTime</td>
+                    <td>@row.ClickCount</td>
+                    <td>
+                        <MudButton
+                            Variant="Variant.Text"
+                            Color="Color.Secondary"
+                            OnClick="@(() => DeleteShortLinkAsync(row.ShortId))">
+                            删除
+                        </MudButton>
+                        <MudButton
+                            Variant="Variant.Text"
+                            Color="Color.Default"
+                            OnClick="@(() => CopyShortLink(row.ShortUrlSuffix))">
+                            复制
+                        </MudButton>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </MudSimpleTable>
+    }
+</MudPaper>
+
+@code {
+    private bool _notLoggedInToCreate = false;
+
+    private bool NotLoggedInToCreate
+    {
+        get => _notLoggedInToCreate;
+        set
+        {
+            _notLoggedInToCreate = value;
+            _ = AddOrUpdateSettingAsync("NotLoggedInToCreate", value.ToString());
+
+            async Task AddOrUpdateSettingAsync(string key, string value)
+            {
+                await SettingsRepository.AddOrUpdateSettingAsync(key, value);
+                Snackbar.Add("设置已保存", Severity.Success, SnackbarConfig.DefaultOptions);
+            }
+        }
+    }
+
+    private string _baseUrl = "";
+
+    override protected void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        _baseUrl = $"{uri.Scheme}://{uri.Authority}/";
+    }
+
+    private List<ShortLinkGenerationTable>? ShortLinkGenerationTables { get; set; } = null;
+
+    override protected async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
+
+        Snackbar.Configuration.PreventDuplicates = false;
+        _notLoggedInToCreate = bool.Parse(await SettingsRepository.GetSettingAsync("NotLoggedInToCreate") ?? "false");
+
+        ShortLinkGenerationTables = await ShortLinkGenerationRepository.GetShortLinkGenerationListAsync();
+
+        StateHasChanged();
+    }
+
+    // 删除短链接
+    private async Task DeleteShortLinkAsync(int shortId)
+    {
+        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
+
+        await ShortLinkGenerationRepository.DeleteShortLinkGenerationAsync(shortId);
+        ShortLinkGenerationTables = await ShortLinkGenerationRepository.GetShortLinkGenerationListAsync();
+        Snackbar.Add("短链接已删除", Severity.Success, SnackbarConfig.DefaultOptions);
+        StateHasChanged();
+    }
+
+    // 复制短链接
+    private async Task CopyShortLink(string shortUrl)
+    {
+        shortUrl = $"{_baseUrl}{shortUrl}";
+        await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", shortUrl);
+        Snackbar.Add("短链接已复制", Severity.Success, SnackbarConfig.DefaultOptions);
+    }
+}

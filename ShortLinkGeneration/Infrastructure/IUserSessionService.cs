@@ -5,7 +5,15 @@
 /// </summary>
 public interface IUserSessionService
 {
+    /// <summary>
+    /// 用户令牌
+    /// </summary>
     string? Token { get; set; }
+
+    /// <summary>
+    /// 用户登录跳转前路由
+    /// </summary>
+    string PreviousRouteBeforeLogin { get; set; }
 }
 
 /// <summary>
@@ -15,4 +23,5 @@ public interface IUserSessionService
 public class UserSessionService : IUserSessionService
 {
     public string? Token { get; set; } = null;
+    public string PreviousRouteBeforeLogin { get; set; } = "/";
 }

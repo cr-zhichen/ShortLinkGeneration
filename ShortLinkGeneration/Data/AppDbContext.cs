@@ -25,6 +25,8 @@ public class AppDbContext : DbContext
     /// </summary>
     public DbSet<ShortLinkGenerationTable> ShortLinkGenerationTable { get; set; }
 
+    public DbSet<SettingsTables> SettingsTables { get; set; }
+
 
     /// <summary>
     /// 数据库配置
@@ -58,6 +60,13 @@ public class AppDbContext : DbContext
                 entity.Property(e => e.ShortId).ValueGeneratedOnAdd();
                 entity.Property(e => e.CreateTime).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasIndex(u => u.ShortUrlSuffix).IsUnique();
+            });
+
+        // 配置 SettingsTables 表的映射
+        modelBuilder
+            .Entity<SettingsTables>(entity =>
+            {
+                entity.HasKey(e => e.Name).HasName("PRIMARY");
             });
     }
 }

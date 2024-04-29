@@ -1,10 +1,15 @@
 ﻿@page "/"
 @using System.Text.RegularExpressions
+@using ShortLinkGeneration.Components.Models
+@using ShortLinkGeneration.Jwt
+@using ShortLinkGeneration.Repositories.Settings
 @using ShortLinkGeneration.Repositories.ShortLinkGeneration
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IJSRuntime JsRuntime
 @inject IShortLinkGenerationRepository ShortLinkGenerationRepository
+@inject AuthUtils AuthUtils
+@inject ISettingsRepository SettingsRepository
 
 <MudSnackbarProvider/>
 
@@ -58,6 +63,24 @@
     private string _baseUrl = "";
     private string _customSuffix = "";
 
+    override protected async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        Snackbar.Configuration.PreventDuplicates = false;
+
+        if (bool.Parse(await SettingsRepository.GetSettingAsync("NotLoggedInToCreate") ?? "false"))
+        {
+            if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User))
+            {
+                Snackbar.Add("未登录用户无法生成短链接", Severity.Error, SnackbarConfig.DefaultOptions);
+                return;
+            }
+        }
+
+        StateHasChanged();
+    }
+
     override protected void OnInitialized()
     {
         var uri = new Uri(NavigationManager.Uri);
@@ -69,7 +92,7 @@
         // 判断_longLinks是否为URL
         if (!Uri.TryCreate(_longLinks, UriKind.Absolute, out _))
         {
-            Snackbar.Add("请输入正确的URL", Severity.Error);
+            Snackbar.Add("请输入正确的URL", Severity.Error, SnackbarConfig.DefaultOptions);
             return;
         }
 
@@ -77,13 +100,13 @@
         {
             if (_customSuffix.Length > 10)
             {
-                Snackbar.Add("自定义后缀长度不能超过10个字符", Severity.Error);
+                Snackbar.Add("自定义后缀长度不能超过10个字符", Severity.Error, SnackbarConfig.DefaultOptions);
                 return;
             }
 
             if (!Regex.IsMatch(_customSuffix, @"^[a-zA-Z0-9]+$"))
             {
-                Snackbar.Add("自定义后缀只能包含字母和数字", Severity.Error);
+                Snackbar.Add("自定义后缀只能包含字母和数字", Severity.Error, SnackbarConfig.DefaultOptions);
                 return;
             }
         }
@@ -97,11 +120,11 @@
         try
         {
             await ShortLinkGenerationRepository.AddShortLinkGenerationAsync(_longLinks, _customSuffix);
-            Snackbar.Add("生成成功", Severity.Success);
+            Snackbar.Add("生成成功", Severity.Success, SnackbarConfig.DefaultOptions);
         }
         catch (Exception e)
         {
-            Snackbar.Add($"{e.Message}", Severity.Error);
+            Snackbar.Add($"{e.Message}", Severity.Error, SnackbarConfig.DefaultOptions);
             Console.WriteLine(e);
         }
     }
@@ -109,6 +132,6 @@
     private async Task CopyLink()
     {
         await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", _shortLinks);
-        Snackbar.Add("已复制到剪贴板", Severity.Success);
+        Snackbar.Add("已复制到剪贴板", Severity.Success, SnackbarConfig.DefaultOptions);
     }
 }

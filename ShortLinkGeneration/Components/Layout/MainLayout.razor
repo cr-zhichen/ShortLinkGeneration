@@ -1,4 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using ShortLinkGeneration.Components.Models
+@inherits LayoutComponentBase
+@inject IUserSessionService UserSessionService
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 <MudPopoverProvider/>
 <MudDialogProvider/>
@@ -7,8 +12,10 @@
 <MudThemingProvider/>
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@DrawerToggle" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@DrawerToggle"/>
         <MudText Typo="Typo.h5" Class="ml-3">Short Link Generation</MudText>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Logout">Logout</MudButton>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu/>
@@ -21,8 +28,21 @@
 @code {
     private bool _drawerOpen = true;
 
+    override protected void OnAfterRender(bool firstRender)
+    {
+        Snackbar.Configuration.PreventDuplicates = false;
+    }
+
     private void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    private async Task Logout()
+    {
+        UserSessionService.Token = null;
+        await LocalStorage.RemoveItemAsync("token");
+        Snackbar.Add("已成功注销", Severity.Success, SnackbarConfig.DefaultOptions);
+        NavigationManager.NavigateTo("/login");
     }
 }

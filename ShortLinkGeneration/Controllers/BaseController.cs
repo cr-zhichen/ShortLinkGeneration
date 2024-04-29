@@ -7,16 +7,19 @@ namespace ShortLinkGeneration.Controllers;
 [Route("")]
 public class BaseController(IShortLinkGenerationRepository ShortLinkGenerationRepository) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(string id)
+    [HttpGet("{shortUrl}")]
+    public async Task<IActionResult> Get(string shortUrl)
     {
         try
         {
             // 尝试从数据库检索长链接
-            var ShortLinkGeneration = await ShortLinkGenerationRepository.GetShortLinkGenerationAsync(id);
+            var shortLinkGeneration = await ShortLinkGenerationRepository.GetShortLinkGenerationAsync(shortUrl);
+
+            // 点击次数 +1
+            await ShortLinkGenerationRepository.AddClickCountAsync(shortLinkGeneration.ShortId);
 
             // 重定向到长链接
-            return Redirect(ShortLinkGeneration.LongUrl);
+            return Redirect(shortLinkGeneration.LongUrl);
         }
         catch (Exception)
         {
