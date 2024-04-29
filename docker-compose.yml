@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  flash_dotnet:
+    image: ghcr.io/cr-zhichen/shortlinkgeneration:latest
+    container_name: short_link_generation
+    ports:
+      - "5268:5268"
+    environment:
+      # 可选参数 mysql, sqlite, sqlserver, postgresql
+      DefaultConnection: sqlite
+      # 数据库连接字符串
+      ConnectionStrings__MySqlConnection: "server=127.0.0.1;database=ShortLinkGeneration;user=root;password=qwertyuiop"
+      ConnectionStrings__SqlServerConnection: "Server=127.0.0.1;Database=ShortLinkGeneration;User Id=sa;Password=Qwertyuiop1234;Encrypt=False;TrustServerCertificate=True;"
+      ConnectionStrings__SqliteConnection: "Data Source=sqlite/App.db"
+      ConnectionStrings__PostgreSqlConnection: "Host=127.0.0.1;Database=ShortLinkGeneration;Username=postgres;Password=qwertyuiop"
+    volumes:
+      - ./sqlite:/app/sqlite
+    restart: unless-stopped
