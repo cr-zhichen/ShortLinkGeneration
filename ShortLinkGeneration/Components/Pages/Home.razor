@@ -69,7 +69,7 @@
 
         Snackbar.Configuration.PreventDuplicates = false;
 
-        if (bool.Parse(await SettingsRepository.GetSettingAsync("NotLoggedInToCreate") ?? "false"))
+        if (bool.Parse(await SettingsRepository.GetSettingAsync("MustBeCreatedAfterLoggingIn") ?? "false"))
         {
             if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User))
             {

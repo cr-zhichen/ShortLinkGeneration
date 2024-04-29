@@ -47,7 +47,11 @@
         if (UserSessionService.Token != null)
         {
             Snackbar.Add("您已登录", Severity.Info, SnackbarConfig.DefaultOptions);
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo(
+                UserSessionService.PreviousRouteBeforeLogin != new Uri(NavigationManager.Uri).AbsolutePath
+                    ? UserSessionService.PreviousRouteBeforeLogin
+                    : "/"
+                );
         }
     }
 

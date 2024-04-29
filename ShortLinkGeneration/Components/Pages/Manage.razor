@@ -18,7 +18,7 @@
     <MudText Typo="Typo.h4" Class="mb-2">后台管理</MudText>
 
     <MudSwitch
-        @bind-Value="@NotLoggedInToCreate"
+        @bind-Value="@MustBeCreatedAfterLoggingIn"
         Color="Color.Primary"
         Label="创建短连接是否需要登录"
         Class="mb-2"/>
@@ -86,14 +86,14 @@
 
 
 @code {
-    private bool _notLoggedInToCreate = false;
+    private bool _mustBeCreatedAfterLoggingIn = false;
 
-    private bool NotLoggedInToCreate
+    private bool MustBeCreatedAfterLoggingIn
     {
-        get => _notLoggedInToCreate;
+        get => _mustBeCreatedAfterLoggingIn;
         set
         {
-            _notLoggedInToCreate = value;
+            _mustBeCreatedAfterLoggingIn = value;
             _ = AddOrUpdateSettingAsync("MustBeCreatedAfterLoggingIn", value.ToString());
 
             async Task AddOrUpdateSettingAsync(string key, string value)
@@ -120,7 +120,7 @@
         if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
 
         Snackbar.Configuration.PreventDuplicates = false;
-        _notLoggedInToCreate = bool.Parse(await SettingsRepository.GetSettingAsync("NotLoggedInToCreate") ?? "false");
+        _mustBeCreatedAfterLoggingIn = bool.Parse(await SettingsRepository.GetSettingAsync("MustBeCreatedAfterLoggingIn") ?? "false");
 
         ShortLinkGenerationTables = await ShortLinkGenerationRepository.GetShortLinkGenerationListAsync();
 
