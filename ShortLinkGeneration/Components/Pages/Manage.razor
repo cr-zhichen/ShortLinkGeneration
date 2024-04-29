@@ -130,6 +130,7 @@
     // 删除短链接
     private async Task DeleteShortLinkAsync(int shortId)
     {
+        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
         // 弹出确认框
         bool? result = await DialogService.ShowMessageBox("警告", "确认删除短连接？", "删除", "取消");
         if (result != true) return;
@@ -151,6 +152,7 @@
     // 修改短连接
     private async Task UpdateShortLinkAsync(int shortId)
     {
+        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
         // 弹窗输入新的长链接
         DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
 

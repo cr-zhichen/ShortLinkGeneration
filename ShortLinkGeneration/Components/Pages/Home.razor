@@ -86,6 +86,8 @@
 
     private async Task GenerateShortLinks()
     {
+        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
+        
         // 判断_longLinks是否为URL
         if (!Uri.TryCreate(_longLinks, UriKind.Absolute, out _))
         {
