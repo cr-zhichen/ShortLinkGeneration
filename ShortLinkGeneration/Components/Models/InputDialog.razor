@@ -1,0 +1,25 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField
+            @bind-Value="_longLinks"
+            Label="需要缩短的链接"
+            HelperText="请输入完整的URL，如：https://www.baidu.com"
+            HelperTextOnFocus="true"
+            Variant="Variant.Text"
+            Class="">
+        </MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private string _longLinks = "";
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(_longLinks));
+    void Cancel() => MudDialog.Cancel();
+}

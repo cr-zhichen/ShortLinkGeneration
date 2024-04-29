@@ -32,9 +32,9 @@ public class ShortLinkGenerationRepository : IShortLinkGenerationRepository
     public async Task<ShortLinkGenerationTable> AddShortLinkGenerationAsync(string longUrl, string shortUrl)
     {
         // 判断短链接是否已存在
-        ShortLinkGenerationTable? ShortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortUrlSuffix == shortUrl);
+        ShortLinkGenerationTable? shortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortUrlSuffix == shortUrl);
 
-        if (ShortLinkGeneration != null)
+        if (shortLinkGeneration != null)
         {
             throw new Exception("短链接已存在");
         }
@@ -52,20 +52,41 @@ public class ShortLinkGenerationRepository : IShortLinkGenerationRepository
     }
 
     /// <summary>
+    /// 修改短连接
+    /// </summary>
+    /// <param name="shortId"></param>
+    /// <param name="longUrl"></param>
+    /// <returns></returns>
+    public async Task<ShortLinkGenerationTable> UpdateShortLinkGenerationAsync(int shortId, string longUrl)
+    {
+        ShortLinkGenerationTable? shortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortId == shortId);
+
+        if (shortLinkGeneration == null)
+        {
+            throw new Exception("短链接不存在");
+        }
+
+        shortLinkGeneration.LongUrl = longUrl;
+        await _context.SaveChangesAsync();
+
+        return shortLinkGeneration;
+    }
+
+    /// <summary>
     /// 获取短链接
     /// </summary>
     /// <param name="shortUrl"></param>
     /// <returns></returns>
     public async Task<ShortLinkGenerationTable> GetShortLinkGenerationAsync(string shortUrl)
     {
-        ShortLinkGenerationTable? ShortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortUrlSuffix == shortUrl);
+        ShortLinkGenerationTable? shortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortUrlSuffix == shortUrl);
 
-        if (ShortLinkGeneration == null)
+        if (shortLinkGeneration == null)
         {
             throw new Exception("短链接不存在");
         }
 
-        return ShortLinkGeneration;
+        return shortLinkGeneration;
 
     }
 
@@ -76,14 +97,14 @@ public class ShortLinkGenerationRepository : IShortLinkGenerationRepository
     /// <returns></returns>
     public async Task DeleteShortLinkGenerationAsync(int shortId)
     {
-        ShortLinkGenerationTable? ShortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortId == shortId);
+        ShortLinkGenerationTable? shortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortId == shortId);
 
-        if (ShortLinkGeneration == null)
+        if (shortLinkGeneration == null)
         {
             throw new Exception("短链接不存在");
         }
 
-        _context.ShortLinkGenerationTable.Remove(ShortLinkGeneration);
+        _context.ShortLinkGenerationTable.Remove(shortLinkGeneration);
         await _context.SaveChangesAsync();
     }
 
@@ -103,14 +124,14 @@ public class ShortLinkGenerationRepository : IShortLinkGenerationRepository
     /// <returns></returns>
     public async Task AddClickCountAsync(int shortId)
     {
-        ShortLinkGenerationTable? ShortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortId == shortId);
+        ShortLinkGenerationTable? shortLinkGeneration = await _context.ShortLinkGenerationTable.FirstOrDefaultAsync(x => x.ShortId == shortId);
 
-        if (ShortLinkGeneration == null)
+        if (shortLinkGeneration == null)
         {
             throw new Exception("短链接不存在");
         }
 
-        ShortLinkGeneration.ClickCount++;
+        shortLinkGeneration.ClickCount++;
         await _context.SaveChangesAsync();
     }
 }

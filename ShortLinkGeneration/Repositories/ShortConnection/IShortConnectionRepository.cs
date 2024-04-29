@@ -14,6 +14,14 @@ public interface IShortLinkGenerationRepository
     Task<ShortLinkGenerationTable> AddShortLinkGenerationAsync(string longUrl, string shortUrl);
 
     /// <summary>
+    /// 修改短连接
+    /// </summary>
+    /// <param name="shortId"></param>
+    /// <param name="longUrl"></param>
+    /// <returns></returns>
+    Task<ShortLinkGenerationTable> UpdateShortLinkGenerationAsync(int shortId, string longUrl);
+
+    /// <summary>
     /// 获取短链接
     /// </summary>
     /// <param name="shortUrl"></param>

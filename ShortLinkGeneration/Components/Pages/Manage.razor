@@ -9,6 +9,7 @@
 @inject IShortLinkGenerationRepository ShortLinkGenerationRepository
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
+@inject IDialogService DialogService
 
 <MudSnackbarProvider/>
 <PageTitle>后台管理</PageTitle>
@@ -31,24 +32,22 @@
         <MudSimpleTable Style="overflow-x: auto;">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>长链接</th>
-                <th>短链接后缀</th>
-                <th>创建时间</th>
-                <th>点击次数</th>
-                <th>操作</th>
+                @foreach (var header in new[] { "ID", "长链接", "短链接后缀", "创建时间", "点击次数", "操作" })
+                {
+                    <th style="text-align: center">@header</th>
+                }
             </tr>
             </thead>
             <tbody>
-            @foreach (var row in ShortLinkGenerationTables!)
+            @foreach (var row in ShortLinkGenerationTables)
             {
                 <tr>
-                    <td>@row.ShortId</td>
-                    <td>@row.LongUrl</td>
-                    <td>@row.ShortUrlSuffix</td>
-                    <td>@row.CreateTime</td>
-                    <td>@row.ClickCount</td>
-                    <td>
+                    <td class="table-cell-wrap" style="text-align: center">@row.ShortId</td>
+                    <td class="table-cell-wrap">@row.LongUrl</td>
+                    <td class="table-cell-wrap" style="text-align: center">@row.ShortUrlSuffix</td>
+                    <td class="table-cell-wrap" style="text-align: center">@row.CreateTime</td>
+                    <td class="table-cell-wrap" style="text-align: center">@row.ClickCount</td>
+                    <td class="table-cell-wrap" style="text-align: center">
                         <MudButton
                             Variant="Variant.Text"
                             Color="Color.Secondary"
@@ -61,13 +60,30 @@
                             OnClick="@(() => CopyShortLink(row.ShortUrlSuffix))">
                             复制
                         </MudButton>
+                        <MudButton
+                            Variant="Variant.Text"
+                            Color="Color.Default"
+                            OnClick="@(() => UpdateShortLinkAsync(row.ShortId))">
+                            修改
+                        </MudButton>
                     </td>
                 </tr>
             }
             </tbody>
         </MudSimpleTable>
+
     }
 </MudPaper>
+
+<style>
+    .table-cell-wrap {
+        word-wrap: break-word;
+        white-space: normal;
+        max-width: 500px;
+        min-width: 100px;
+    }
+</style>
+
 
 @code {
     private bool _notLoggedInToCreate = false;
@@ -114,7 +130,9 @@
     // 删除短链接
     private async Task DeleteShortLinkAsync(int shortId)
     {
-        if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User)) return;
+        // 弹出确认框
+        bool? result = await DialogService.ShowMessageBox("警告", "确认删除短连接？", "删除", "取消");
+        if (result != true) return;
 
         await ShortLinkGenerationRepository.DeleteShortLinkGenerationAsync(shortId);
         ShortLinkGenerationTables = await ShortLinkGenerationRepository.GetShortLinkGenerationListAsync();
@@ -128,5 +146,38 @@
         shortUrl = $"{_baseUrl}{shortUrl}";
         await JsRuntime.InvokeVoidAsync("clipboardCopy.copyText", shortUrl);
         Snackbar.Add("短链接已复制", Severity.Success, SnackbarConfig.DefaultOptions);
+    }
+
+    // 修改短连接
+    private async Task UpdateShortLinkAsync(int shortId)
+    {
+        // 弹窗输入新的长链接
+        DialogOptions closeOnEscapeKey = new DialogOptions() { CloseOnEscapeKey = true };
+
+        var dialog = await DialogService.ShowAsync<InputDialog>("修改长连接", closeOnEscapeKey);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var longUrl = result.Data as string;
+            if (string.IsNullOrWhiteSpace(longUrl))
+            {
+                Snackbar.Add("长链接不能为空", Severity.Error, SnackbarConfig.DefaultOptions);
+                return;
+            }
+
+            // 判断_longLinks是否为URL
+            if (!Uri.TryCreate(longUrl, UriKind.Absolute, out _))
+            {
+                Snackbar.Add("请输入正确的URL", Severity.Error, SnackbarConfig.DefaultOptions);
+                return;
+            }
+
+            await ShortLinkGenerationRepository.UpdateShortLinkGenerationAsync(shortId, longUrl);
+            ShortLinkGenerationTables = await ShortLinkGenerationRepository.GetShortLinkGenerationListAsync();
+            Snackbar.Add("短链接已修改", Severity.Success, SnackbarConfig.DefaultOptions);
+            StateHasChanged();
+        }
+
     }
 }
