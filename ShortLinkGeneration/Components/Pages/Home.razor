@@ -65,10 +65,6 @@
 
     override protected async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender) return;
-
-        Snackbar.Configuration.PreventDuplicates = false;
-
         if (bool.Parse(await SettingsRepository.GetSettingAsync("MustBeCreatedAfterLoggingIn") ?? "false"))
         {
             if (!await AuthUtils.Auth(UserRole.Admin, UserRole.User))
@@ -77,7 +73,8 @@
                 return;
             }
         }
-
+        if (!firstRender) return;
+        Snackbar.Configuration.PreventDuplicates = false;
         StateHasChanged();
     }
 
