@@ -20,7 +20,7 @@
     <MudSwitch
         @bind-Value="@NotLoggedInToCreate"
         Color="Color.Primary"
-        Label="是否禁止未登录用户创建短链接"
+        Label="创建短连接是否需要登录"
         Class="mb-2"/>
 
     @if (ShortLinkGenerationTables == null)
@@ -94,7 +94,7 @@
         set
         {
             _notLoggedInToCreate = value;
-            _ = AddOrUpdateSettingAsync("NotLoggedInToCreate", value.ToString());
+            _ = AddOrUpdateSettingAsync("MustBeCreatedAfterLoggingIn", value.ToString());
 
             async Task AddOrUpdateSettingAsync(string key, string value)
             {
